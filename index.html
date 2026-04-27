@@ -1,73 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MoneyLeak Checker</title>
+<title>Kosten-Checker</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f7f9fc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f7fb;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
 
 .container {
-  max-width: 500px;
-  margin: 60px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  max-width: 480px;
+  margin: 80px auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
 h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 26px;
+  margin-bottom: 8px;
 }
 
 p {
-  color: #666;
+  color: #6b7280;
   margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #374151;
 }
 
 input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
   font-size: 16px;
 }
 
 button {
   width: 100%;
   padding: 14px;
-  background: #2ecc71;
+  margin-top: 20px;
+  background: #22c55e;
   border: none;
   color: white;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  margin-top: 10px;
+  font-weight: 600;
 }
 
 button:hover {
-  background: #27ae60;
+  background: #16a34a;
 }
 
 .result {
   margin-top: 25px;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  color: #111827;
 }
 
 .savings {
-  color: green;
-  font-size: 26px;
+  color: #16a34a;
+  font-size: 24px;
+  font-weight: bold;
   margin-top: 10px;
+}
+
+.trust {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 15px;
 }
 </style>
 </head>
@@ -75,18 +91,29 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>Stop wasting money every month</h1>
-  <p>Find hidden costs in 60 seconds</p>
+  <h1>Prüfe, ob du jeden Monat zu viel zahlst</h1>
+  <p>Die meisten verschwenden 20€–100€ ohne es zu merken.</p>
 
-  <input type="number" id="mobile" placeholder="Mobile contract (€)">
-  <input type="number" id="subs" placeholder="Subscriptions (€)">
-  <input type="number" id="gym" placeholder="Gym (€)">
-  <input type="number" id="other" placeholder="Other costs (€)">
+  <label>Handyvertrag (€)</label>
+  <input type="number" id="mobile">
 
-  <button onclick="calculate()">Check My Savings</button>
+  <label>Abonnements (€)</label>
+  <input type="number" id="subs">
+
+  <label>Fitnessstudio (€)</label>
+  <input type="number" id="gym">
+
+  <label>Sonstige Kosten (€)</label>
+  <input type="number" id="other">
+
+  <button onclick="calculate()">Kosten prüfen</button>
 
   <div class="result" id="result"></div>
   <div class="savings" id="savings"></div>
+
+  <div class="trust">
+    Keine Anmeldung • Keine Datenspeicherung • Sofortiges Ergebnis
+  </div>
 </div>
 
 <script>
@@ -98,15 +125,14 @@ function calculate() {
 
   let total = mobile + subs + gym + other;
 
-  // Simple benchmark (you can adjust later)
   let ideal = total * 0.7;
   let wasted = total - ideal;
 
   document.getElementById('result').innerHTML =
-    "You spend €" + total.toFixed(2) + " per month";
+    "Du zahlst aktuell €" + total.toFixed(2) + " pro Monat";
 
   document.getElementById('savings').innerHTML =
-    "You could save €" + wasted.toFixed(2) + " monthly";
+    "⚠️ Du könntest €" + wasted.toFixed(2) + " sparen";
 }
 </script>
 
