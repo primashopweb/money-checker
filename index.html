@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoneyLeak Checker</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f9fc;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 500px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #2ecc71;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #27ae60;
+}
+
+.result {
+  margin-top: 25px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.savings {
+  color: green;
+  font-size: 26px;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Stop wasting money every month</h1>
+  <p>Find hidden costs in 60 seconds</p>
+
+  <input type="number" id="mobile" placeholder="Mobile contract (€)">
+  <input type="number" id="subs" placeholder="Subscriptions (€)">
+  <input type="number" id="gym" placeholder="Gym (€)">
+  <input type="number" id="other" placeholder="Other costs (€)">
+
+  <button onclick="calculate()">Check My Savings</button>
+
+  <div class="result" id="result"></div>
+  <div class="savings" id="savings"></div>
+</div>
+
+<script>
+function calculate() {
+  let mobile = parseFloat(document.getElementById('mobile').value) || 0;
+  let subs = parseFloat(document.getElementById('subs').value) || 0;
+  let gym = parseFloat(document.getElementById('gym').value) || 0;
+  let other = parseFloat(document.getElementById('other').value) || 0;
+
+  let total = mobile + subs + gym + other;
+
+  // Simple benchmark (you can adjust later)
+  let ideal = total * 0.7;
+  let wasted = total - ideal;
+
+  document.getElementById('result').innerHTML =
+    "You spend €" + total.toFixed(2) + " per month";
+
+  document.getElementById('savings').innerHTML =
+    "You could save €" + wasted.toFixed(2) + " monthly";
+}
+</script>
+
+</body>
+</html>
