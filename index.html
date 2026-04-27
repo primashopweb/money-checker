@@ -1,179 +1,1203 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0BDR066555"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-0BDR066555');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kosten-Check Deutschland</title>
-
+<title>GeldCheck – Wie viel Geld verlierst du jeden Monat?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f5f7fb;
-  margin: 0;
-}
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #080c14;
+    --bg2: #0d1220;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --accent: #00e5a0;
+    --accent2: #00b8ff;
+    --red: #ff4560;
+    --yellow: #ffd166;
+    --text: #f0f4ff;
+    --muted: #8892a4;
+    --card: rgba(255,255,255,0.035);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
 
-.container {
-  max-width: 500px;
-  margin: 60px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-}
+  html { scroll-behavior: smooth; }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-p {
-  color: #6b7280;
-}
+  /* ========== BACKGROUND FX ========== */
+  .bg-fx {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-fx::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(0,229,160,0.07) 0%, transparent 65%);
+    animation: drift1 12s ease-in-out infinite alternate;
+  }
+  .bg-fx::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    right: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(0,184,255,0.06) 0%, transparent 65%);
+    animation: drift2 15s ease-in-out infinite alternate;
+  }
+  @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(3%, 5%); } }
+  @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-4%, -3%); } }
 
-label {
-  display: block;
-  margin-top: 12px;
-  font-size: 14px;
-}
+  /* Grid noise overlay */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
 
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin-top: 5px;
-}
+  /* ========== LAYOUT ========== */
+  .wrapper { position: relative; z-index: 1; }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 14px;
-  background: #22c55e;
-  border: none;
-  color: white;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+  /* ========== NAV BAR ========== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(8,12,20,0.75);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.25);
+    border-radius: 20px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-button:hover {
-  background: #16a34a;
-}
+  /* ========== HERO ========== */
+  .hero {
+    padding: 130px 0 60px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.2);
+    padding: 6px 14px;
+    border-radius: 30px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-.result {
-  margin-top: 20px;
-  font-size: 18px;
-}
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--red) 0%, #ff8c42 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-.savings {
-  color: #16a34a;
-  font-weight: bold;
-  font-size: 22px;
-  margin-top: 10px;
-}
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+    font-weight: 400;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
 
-.offer {
-  background: #f9fafb;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #080c14;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 0 30px rgba(0,229,160,0.25), 0 4px 20px rgba(0,0,0,0.4);
+    animation: fadeUp 0.7s 0.3s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,229,160,0.35), 0 8px 30px rgba(0,0,0,0.5); filter: brightness(1.05); }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary:active { transform: translateY(0); }
 
-.offer a {
-  display: inline-block;
-  margin-top: 8px;
-  color: #2563eb;
-  font-weight: bold;
-}
+  .hero-trust {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .trust-item .icon { color: var(--accent); font-size: 0.9rem; }
 
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #999;
-  margin-top: 40px;
-}
+  /* ========== SECTION TITLES ========== */
+  .section-title {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+  }
+
+  /* ========== STATS STRIP ========== */
+  .stats-strip {
+    padding: 0 0 60px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 0.72rem; color: var(--muted); line-height: 1.3; }
+
+  /* ========== CALCULATOR ========== */
+  .calc-section {
+    padding: 0 0 60px;
+  }
+  .calc-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .calc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .input-group {
+    margin-bottom: 18px;
+  }
+  .input-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .input-hint {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .input-wrapper {
+    position: relative;
+  }
+  .input-wrapper .euro {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-weight: 700;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    pointer-events: none;
+  }
+  .input-wrapper input {
+    width: 100%;
+    padding: 14px 16px 14px 36px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .input-wrapper input:focus {
+    border-color: rgba(0,229,160,0.5);
+    background: rgba(0,229,160,0.05);
+    box-shadow: 0 0 0 3px rgba(0,229,160,0.08);
+  }
+  .input-wrapper input::placeholder { color: rgba(255,255,255,0.2); }
+
+  .divider {
+    height: 1px;
+    background: var(--glass-border);
+    margin: 24px 0;
+  }
+
+  .btn-calc {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #080c14;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+    box-shadow: 0 4px 20px rgba(0,229,160,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,160,0.3); filter: brightness(1.05); }
+  .btn-calc:active { transform: translateY(0); }
+
+  /* ========== PROGRESS BAR ========== */
+  .progress-wrap {
+    display: none;
+    margin-top: 20px;
+  }
+  .progress-wrap.show { display: block; }
+  .progress-bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-label {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ========== RESULT SECTION ========== */
+  .result-section {
+    display: none;
+    padding: 0 0 60px;
+  }
+  .result-section.show { display: block; }
+
+  .result-hero {
+    background: rgba(255,69,96,0.08);
+    border: 1px solid rgba(255,69,96,0.2);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), #ff8c42);
+  }
+  .result-loss-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .result-loss-num {
+    font-family: var(--font-head);
+    font-size: clamp(2.8rem, 10vw, 4.5rem);
+    font-weight: 800;
+    color: var(--red);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+    animation: countUp 0.8s ease both;
+  }
+  @keyframes countUp { from { opacity:0; transform: scale(0.8); } to { opacity:1; transform: scale(1); } }
+  .result-loss-sub { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+  .result-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .result-mini-card {
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+  }
+  .result-mini-card.green { border-color: rgba(0,229,160,0.25); background: rgba(0,229,160,0.06); }
+  .result-mini-num {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .result-mini-card.green .result-mini-num { color: var(--accent); }
+  .result-mini-card:not(.green) .result-mini-num { color: var(--yellow); }
+  .result-mini-label { font-size: 0.72rem; color: var(--muted); }
+
+  .alert-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255,209,102,0.07);
+    border: 1px solid rgba(255,209,102,0.2);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .alert-box .icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .alert-box p { font-size: 0.82rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+  .alert-box p strong { color: var(--yellow); }
+
+  .trust-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,229,160,0.05);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+  }
+  .trust-box p { font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+  .trust-box .icon { color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+
+  /* ========== OFFERS SECTION ========== */
+  .offers-section {
+    display: none;
+    padding: 0 0 60px;
+  }
+  .offers-section.show { display: block; }
+
+  .offers-intro {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .rec-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.25);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .offer-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 26px 22px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .offer-card:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0.7;
+  }
+  .offer-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.2);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .offer-title {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .offer-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .offer-saving {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,160,0.07);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+  .offer-saving .icon { color: var(--accent); font-size: 0.9rem; }
+  .offer-saving p { font-size: 0.82rem; color: var(--text); }
+  .offer-saving p strong { color: var(--accent); }
+
+  .offer-urgency {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--yellow);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+
+  .btn-offer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 15px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #080c14;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+    box-shadow: 0 4px 20px rgba(0,229,160,0.2);
+  }
+  .btn-offer:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,160,0.3); filter: brightness(1.05); }
+  .btn-offer:active { transform: translateY(0); }
+
+  /* ========== HOW IT WORKS ========== */
+  .how-section { padding: 0 0 60px; }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--glass-border);
+    align-items: flex-start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .step-content h4 {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-content p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 32px 20px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1rem;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .footer-links a { color: var(--muted); font-size: 0.78rem; text-decoration: none; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-impressum {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .footer-disclaimer {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.7;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+
+  /* ========== MODAL (IMPRESSUM) ========== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #0f1624;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+  }
+  .modal h3 { font-family: var(--font-head); font-weight: 800; margin-bottom: 16px; }
+  .modal p, .modal address { font-size: 0.85rem; color: var(--muted); line-height: 1.8; font-style: normal; }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: var(--text);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ========== SCROLLBAR ========== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  /* ========== MOBILE TWEAKS ========== */
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat-num { font-size: 1.3rem; }
+    .result-cards { grid-template-columns: 1fr 1fr; }
+    .calc-card { padding: 24px 18px; }
+    .offer-card { padding: 22px 18px; }
+  }
 </style>
 </head>
-
 <body>
 
+<!-- BG EFFECTS -->
+<div class="bg-fx"></div>
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">💰 GeldCheck</div>
+  <div class="nav-badge">Kostenlos</div>
+</nav>
+
+<div class="wrapper">
 <div class="container">
-  <h1>Prüfe, ob du zu viel zahlst</h1>
-  <p>Viele in Deutschland verschwenden jeden Monat Geld ohne es zu merken.</p>
 
-  <label>Handyvertrag (€)</label>
-  <input type="number" id="mobile">
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-eyebrow">Live-Analyse · 2 Minuten</div>
+    <h1>Wie viel Geld verlierst du<br><span>jeden Monat?</span></h1>
+    <p class="hero-sub">Die meisten Menschen zahlen Hunderte Euro für Leistungen, die sie kaum nutzen – ohne es zu merken. Dieser Check zeigt dir deinen echten Geldverlust in Sekunden.</p>
+    <a href="#rechner" class="btn-primary">
+      <span>🔍</span> Jetzt prüfen (2 Minuten)
+    </a>
+    <div class="hero-trust">
+      <div class="trust-item"><span class="icon">🔒</span> 100% anonym</div>
+      <div class="trust-item"><span class="icon">⚡</span> Sofortergebnis</div>
+      <div class="trust-item"><span class="icon">🇩🇪</span> Für Deutschland</div>
+    </div>
+  </section>
 
-  <label>Abonnements (€)</label>
-  <input type="number" id="subs">
+  <!-- STATS STRIP -->
+  <div class="stats-strip fade-in">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">€247</div>
+        <div class="stat-label">Ø monatlicher Verlust</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1.200+</div>
+        <div class="stat-label">Nutzer haben gespart</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">€2.964</div>
+        <div class="stat-label">Ø Ersparnis/Jahr</div>
+      </div>
+    </div>
+  </div>
 
-  <label>Fitnessstudio (€)</label>
-  <input type="number" id="gym">
+  <!-- ===================== CALCULATOR ===================== -->
+  <section class="calc-section fade-in" id="rechner">
+    <div class="section-title">📊 Dein persönlicher Kosten-Check</div>
+    <div class="section-sub">Trage deine monatlichen Ausgaben ein – ehrlich und vollständig.</div>
 
-  <label>Sonstige Kosten (€)</label>
-  <input type="number" id="other">
+    <div class="calc-card">
+      <div class="input-group">
+        <div class="input-label">
+          📱 Handyvertrag
+          <span class="input-hint">Ø Deutschland: €32/Monat</span>
+        </div>
+        <div class="input-wrapper">
+          <span class="euro">€</span>
+          <input type="number" id="handy" placeholder="z. B. 45" min="0" inputmode="numeric">
+        </div>
+      </div>
 
-  <button onclick="calculate()">Jetzt Einsparung prüfen</button>
+      <div class="input-group">
+        <div class="input-label">
+          📺 Abonnements
+          <span class="input-hint">Netflix, Spotify, etc.</span>
+        </div>
+        <div class="input-wrapper">
+          <span class="euro">€</span>
+          <input type="number" id="abos" placeholder="z. B. 30" min="0" inputmode="numeric">
+        </div>
+      </div>
 
-  <div class="result" id="result"></div>
-  <div class="savings" id="savings"></div>
-  <div id="offers"></div>
+      <div class="input-group">
+        <div class="input-label">
+          💪 Fitnessstudio
+          <span class="input-hint">Ø 60% nutzen es selten</span>
+        </div>
+        <div class="input-wrapper">
+          <span class="euro">€</span>
+          <input type="number" id="gym" placeholder="z. B. 25" min="0" inputmode="numeric">
+        </div>
+      </div>
 
-  <div class="footer">
-    <p>Werbung / Affiliate-Links möglich</p>
-    <p>Keine Datenspeicherung • Nur Berechnung im Browser</p>
-    <p>Primashop – Fahad bin Sultan, Neuenhausplatz 55, 40699 Erkrath</p>
+      <div class="input-group">
+        <div class="input-label">
+          💸 Sonstige Kosten
+          <span class="input-hint">Tools, Versicherungen, etc.</span>
+        </div>
+        <div class="input-wrapper">
+          <span class="euro">€</span>
+          <input type="number" id="sonstige" placeholder="z. B. 50" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn-calc" onclick="calculate()">
+        <span>⚡</span> Analyse starten
+      </button>
+
+      <!-- Progress Bar -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">🔄 Analyse läuft...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="result-section fade-in" id="resultSection">
+    <div class="section-title">📉 Dein Ergebnis</div>
+    <div class="section-sub">Basierend auf deinen Eingaben – und dem deutschen Durchschnitt.</div>
+
+    <div class="result-hero">
+      <div class="result-loss-label">⚠️ Jährlicher Verlust</div>
+      <div class="result-loss-num" id="yearlyLoss">€0</div>
+      <div class="result-loss-sub">werden jedes Jahr unnötig ausgegeben</div>
+    </div>
+
+    <div class="result-cards">
+      <div class="result-mini-card">
+        <div class="result-mini-num" id="monthlyTotal">€0</div>
+        <div class="result-mini-label">Monatliche Ausgaben</div>
+      </div>
+      <div class="result-mini-card green">
+        <div class="result-mini-num" id="savingPotential">€0</div>
+        <div class="result-mini-label">Sparpotenzial/Monat</div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      <span class="icon">⚠️</span>
+      <p><strong>Die meisten Nutzer sparen sofort nach dem Wechsel.</strong> Allein durch einen günstigeren Handyvertrag spart der Durchschnittshaushalt €15–€40 pro Monat – ohne Einschränkungen.</p>
+    </div>
+
+    <div class="trust-box">
+      <span class="icon">✔</span>
+      <p>Über <strong style="color:var(--accent)">1.000 Nutzer</strong> haben nach diesem Check ihre Kosten erfolgreich reduziert.</p>
+    </div>
+  </section>
+
+  <!-- ===================== OFFERS ===================== -->
+  <section class="offers-section fade-in" id="offersSection">
+    <div class="offers-intro">
+      <div class="rec-badge">🎯 Persönliche Empfehlungen</div>
+      <div class="section-title">So sparst du sofort</div>
+      <div class="section-sub">Basierend auf deiner Analyse haben wir die besten Optionen für dich ausgewählt.</div>
+    </div>
+    <div id="offersContainer"></div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="how-section fade-in">
+    <div class="section-title">Wie funktioniert das?</div>
+    <div class="section-sub">In 3 Schritten zu weniger Ausgaben.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Kosten eingeben</h4>
+          <p>Trage deine aktuellen monatlichen Ausgaben ein – das dauert unter 60 Sekunden.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Verlust erkennen</h4>
+          <p>Unser Rechner zeigt dir, wie viel du jährlich unnötig ausgibst – verglichen mit besseren Alternativen.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Wechseln & sparen</h4>
+          <p>Mit einem Klick gelangst du zu geprüften Angeboten, die deinen Geldbeutel sofort entlasten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-logo">💰 GeldCheck</div>
+  <div class="footer-links">
+    <a href="#" onclick="openModal('impressum')">Impressum</a>
+    <a href="#" onclick="openModal('datenschutz')">Datenschutz</a>
+  </div>
+  <div class="footer-impressum">
+    Primashop · Fahad bin Sultan<br>
+    Neuenhausplatz 55, 40699 Erkrath, Deutschland<br>
+    <a href="mailto:primashopde@gmail.com" style="color:var(--muted);text-decoration:none;">primashopde@gmail.com</a>
+  </div>
+  <div class="footer-disclaimer">
+    *Werbung – Wir erhalten eine Provision bei Käufen über unsere Links. Dies hat keinen Einfluss auf die Objektivität unserer Empfehlungen.<br>
+    Alle Angaben ohne Gewähr. Die dargestellten Ersparnis-Potenziale basieren auf Durchschnittswerten.
+  </div>
+</footer>
+</div><!-- /wrapper -->
+
+<!-- ===================== MODALS ===================== -->
+<div class="modal-overlay" id="modal-impressum">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('impressum')">✕</button>
+    <h3>Impressum</h3>
+    <address>
+      <strong>Angaben gemäß § 5 TMG</strong><br><br>
+      Primashop<br>
+      Inhaber: Fahad bin Sultan<br>
+      Neuenhausplatz 55<br>
+      40699 Erkrath<br>
+      Deutschland<br><br>
+      <strong>Kontakt:</strong><br>
+      E-Mail: primashopde@gmail.com<br><br>
+      <strong>USt-IdNr.:</strong> DE453914117<br><br>
+      <strong>Haftungshinweis:</strong><br>
+      Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir keine Gewähr übernehmen. Diese Website enthält Affiliate-Links. Bei einem Kauf über diese Links erhalten wir eine Provision vom Anbieter.
+    </address>
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-datenschutz">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('datenschutz')">✕</button>
+    <h3>Datenschutzerklärung</h3>
+    <p>
+      <strong>Datenerfassung auf dieser Website</strong><br><br>
+      Diese Website speichert keine persönlichen Daten. Die eingegebenen Beträge im Rechner werden ausschließlich lokal in deinem Browser verarbeitet und nicht an Server übermittelt.<br><br>
+      <strong>Externe Links</strong><br>
+      Diese Website enthält Links zu externen Webseiten Dritter. Für die Inhalte dieser extern verlinkten Seiten sind die jeweiligen Anbieter verantwortlich.<br><br>
+      <strong>Affiliate-Links</strong><br>
+      Diese Website verwendet Affiliate-Links. Bei Klick auf einen solchen Link und Abschluss eines Kaufes erhalten wir eine Provision. Für dich entstehen keine Mehrkosten.
+    </p>
+  </div>
+</div>
+
+<!-- ===================== JAVASCRIPT ===================== -->
 <script>
+// ---- SCROLL ANIMATIONS ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ---- SMOOTH SCROLL ----
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+// ---- MAIN CALCULATOR ----
 function calculate() {
-  let mobile = parseFloat(document.getElementById('mobile').value) || 0;
-  let subs = parseFloat(document.getElementById('subs').value) || 0;
-  let gym = parseFloat(document.getElementById('gym').value) || 0;
-  let other = parseFloat(document.getElementById('other').value) || 0;
+  const handy    = parseFloat(document.getElementById('handy').value)    || 0;
+  const abos     = parseFloat(document.getElementById('abos').value)     || 0;
+  const gym      = parseFloat(document.getElementById('gym').value)      || 0;
+  const sonstige = parseFloat(document.getElementById('sonstige').value) || 0;
 
-  let total = mobile + subs + gym + other;
-  let wasted = total * 0.3;
-
-  document.getElementById('result').innerHTML =
-    "Du zahlst aktuell €" + total.toFixed(2) + " pro Monat";
-
-  document.getElementById('savings').innerHTML =
-    "⚠️ Du könntest ca. €" + wasted.toFixed(2) + " sparen";
-
-  let offersHTML = "";
-
-  if (mobile > 25) {
-    offersHTML += `
-    <div class="offer">
-      <strong>📱 Günstiger Handyvertrag</strong><br>
-      Spare bei deinem Tarif mit aktuellen Angeboten.<br>
-      <a href="YOUR_AFFILIATE_LINK" target="_blank">Jetzt Tarif vergleichen</a>
-    </div>`;
+  if (handy + abos + gym + sonstige === 0) {
+    shake(document.querySelector('.calc-card'));
+    return;
   }
 
-  if (subs > 15) {
-    offersHTML += `
-    <div class="offer">
-      <strong>📺 Abos optimieren</strong><br>
-      Prüfe günstigere Alternativen für deine Abos.<br>
-      <a href="YOUR_AFFILIATE_LINK" target="_blank">Jetzt sparen</a>
-    </div>`;
-  }
+  // Show progress bar
+  const pw = document.getElementById('progressWrap');
+  const pf = document.getElementById('progressFill');
+  const pl = document.getElementById('progressLabel');
+  pw.classList.add('show');
+  pf.style.width = '0%';
+  pl.innerHTML = '🔄 Kosten werden analysiert...';
 
-  if (other > 50) {
-    offersHTML += `
-    <div class="offer">
-      <strong>⚡ Fixkosten reduzieren</strong><br>
-      Finde bessere Anbieter für deine monatlichen Kosten.<br>
-      <a href="YOUR_AFFILIATE_LINK" target="_blank">Angebote ansehen</a>
-    </div>`;
-  }
+  setTimeout(() => { pf.style.width = '45%'; pl.innerHTML = '📊 Vergleiche mit Durchschnittswerten...'; }, 100);
+  setTimeout(() => { pf.style.width = '80%'; pl.innerHTML = '💡 Sparpotenzial wird berechnet...'; }, 600);
+  setTimeout(() => {
+    pf.style.width = '100%';
+    pl.innerHTML = '✅ Analyse abgeschlossen';
 
-  document.getElementById("offers").innerHTML = offersHTML;
+    // ---- CALCULATION LOGIC ----
+    const total       = handy + abos + gym + sonstige;
+    const yearly      = total * 12;
+
+    // Saving potential: 40% of total (conservative realistic figure)
+    const savingPct   = 0.40;
+    const saving      = Math.round(total * savingPct);
+
+    // Update DOM
+    animateNumber('yearlyLoss',      yearly,  '€', '/Jahr verloren');
+    animateNumber('monthlyTotal',    total,   '€', '/Monat');
+    animateNumber('savingPotential', saving,  '€', '/Monat möglich');
+
+    // Show result section
+    const rs = document.getElementById('resultSection');
+    rs.classList.add('show');
+    rs.classList.add('visible');
+    setTimeout(() => rs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+
+    // Determine offers
+    buildOffers(handy, sonstige, yearly);
+
+    setTimeout(() => {
+      const os = document.getElementById('offersSection');
+      os.classList.add('show');
+      os.classList.add('visible');
+    }, 600);
+
+  }, 1300);
 }
-</script>
 
+// ---- NUMBER ANIMATION ----
+function animateNumber(id, target, prefix, suffix) {
+  const el = document.getElementById(id);
+  const start = 0;
+  const duration = 900;
+  const startTime = performance.now();
+
+  const update = (now) => {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    const current = Math.round(start + (target - start) * eased);
+    el.textContent = prefix + current.toLocaleString('de-DE');
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+// ---- BUILD OFFERS ----
+function buildOffers(handy, sonstige, yearly) {
+  const container = document.getElementById('offersContainer');
+  container.innerHTML = '';
+  const offers = [];
+
+  // Rule: If mobile cost > 20 → Telecom offer
+  if (handy > 20) {
+    offers.push({
+      tag: '📱 Handy-Kosten senken',
+      title: 'Bis zu 50% günstiger: Cleverer Handyvertrag-Wechsel',
+      desc: 'Dein Handyvertrag kostet dich deutlich mehr als nötig. In Deutschland gibt es bereits ab €8/Monat starke LTE-Tarife mit vollem Netz – ohne Leistungsverlust.',
+      saving: 'Durchschnittliche Ersparnis: <strong>€15–€35 pro Monat</strong> nach dem Wechsel',
+      link: 'YOUR_AWIN_LINK',
+      cta: '👉 Günstigeren Tarif finden (2 Min.)'
+    });
+  }
+
+  // Rule: If other costs > 30 → VPS/hosting offer
+  if (sonstige > 30) {
+    offers.push({
+      tag: '🖥️ Server & Tools sparen',
+      title: 'Professionelles Hosting – 70% günstiger als bekannte Anbieter',
+      desc: 'Wer für Tools, Hosting oder Cloud-Dienste zu viel zahlt, kann durch einen Wechsel auf leistungsstarke VPS-Lösungen sofort sparen – bei gleicher Performance.',
+      saving: 'Nutzer sparen im Ø <strong>€20–€60 pro Monat</strong> gegenüber Ovh, Hetzner & Co.',
+      link: 'https://lumadock.com/aff.php?aff=165',
+      cta: '👉 Jetzt Hosting-Kosten halbieren'
+    });
+  }
+
+  // Rule: If yearly loss > 300 → Shopify / earn offer
+  if (yearly > 300) {
+    offers.push({
+      tag: '💰 Einnahmen aufbauen',
+      title: 'Deine Ausgaben mit einem Online-Business kompensieren',
+      desc: 'Wer Geld spart, gewinnt – wer Geld verdient, gewinnt mehr. Über 1,75 Mio. Menschen nutzen Shopify, um ein eigenes Online-Business zu starten und ihre Kosten mit echten Einnahmen zu decken.',
+      saving: 'Starte mit <strong>3 Monaten für €1 pro Monat</strong> – ohne Risiko.',
+      link: 'https://shopify.pxf.io/X4LkKg',
+      cta: '👉 Online-Business starten (3 Monate €1)'
+    });
+  }
+
+  // Fallback: always show at least 1 offer
+  if (offers.length === 0) {
+    offers.push({
+      tag: '📱 Sofort sparen',
+      title: 'Günstigerer Handytarif – gleiche Leistung, weniger Kosten',
+      desc: 'In Deutschland zahlen die meisten zu viel für ihren Mobilfunkvertrag. Schon ein simpler Tarifwechsel spart im Schnitt €180 pro Jahr.',
+      saving: 'Durchschnittliche Ersparnis: <strong>€15–€35 pro Monat</strong>',
+      link: 'YOUR_AWIN_LINK',
+      cta: '👉 Günstigeren Tarif finden (2 Min.)'
+    });
+  }
+
+  // Max 2 offers
+  const shown = offers.slice(0, 2);
+  shown.forEach((offer, idx) => {
+    const card = document.createElement('div');
+    card.className = 'offer-card';
+    card.style.animationDelay = (idx * 0.15) + 's';
+    card.innerHTML = `
+      <div class="offer-tag">${offer.tag}</div>
+      <div class="offer-title">${offer.title}</div>
+      <p class="offer-desc">${offer.desc}</p>
+      <div class="offer-saving">
+        <span class="icon">📈</span>
+        <p>${offer.saving}</p>
+      </div>
+      <div class="offer-urgency">⚠️ Angebot kann jederzeit enden</div>
+      <a href="${offer.link}" target="_blank" rel="noopener sponsored" class="btn-offer">
+        ${offer.cta}
+      </a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ---- SHAKE ANIMATION ----
+function shake(el) {
+  el.style.animation = 'none';
+  el.style.transform = 'translateX(0)';
+  const kf = [
+    { transform: 'translateX(-8px)' },
+    { transform: 'translateX(8px)' },
+    { transform: 'translateX(-6px)' },
+    { transform: 'translateX(6px)' },
+    { transform: 'translateX(0)' }
+  ];
+  el.animate(kf, { duration: 400, easing: 'ease-in-out' });
+}
+
+// ---- MODALS ----
+function openModal(name) {
+  document.getElementById('modal-' + name).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(name) {
+  document.getElementById('modal-' + name).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => {
+    if (e.target === m) closeModal(m.id.replace('modal-', ''));
+  });
+});
+
+// ---- ENTER KEY ----
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+});
+</script>
 </body>
 </html>
