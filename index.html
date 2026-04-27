@@ -3,64 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kosten-Checker</title>
+<title>Kosten-Check Deutschland</title>
 
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: #f5f7fb;
   margin: 0;
-  padding: 0;
 }
 
 .container {
-  max-width: 480px;
-  margin: 80px auto;
-  background: #ffffff;
-  padding: 35px;
+  max-width: 500px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
 
 h1 {
-  font-size: 26px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  margin-bottom: 5px;
 }
 
 p {
   color: #6b7280;
-  margin-bottom: 25px;
 }
 
 label {
   display: block;
-  text-align: left;
+  margin-top: 12px;
   font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  color: #374151;
 }
 
 input {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 5px;
 }
 
 button {
   width: 100%;
-  padding: 14px;
   margin-top: 20px;
+  padding: 14px;
   background: #22c55e;
   border: none;
   color: white;
   font-size: 16px;
   border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
 }
 
 button:hover {
@@ -68,22 +61,36 @@ button:hover {
 }
 
 .result {
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 18px;
-  color: #111827;
 }
 
 .savings {
   color: #16a34a;
-  font-size: 24px;
   font-weight: bold;
+  font-size: 22px;
   margin-top: 10px;
 }
 
-.trust {
-  font-size: 13px;
-  color: #9ca3af;
+.offer {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
   margin-top: 15px;
+}
+
+.offer a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 40px;
 }
 </style>
 </head>
@@ -91,8 +98,8 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>Prüfe, ob du jeden Monat zu viel zahlst</h1>
-  <p>Die meisten verschwenden 20€–100€ ohne es zu merken.</p>
+  <h1>Prüfe, ob du zu viel zahlst</h1>
+  <p>Viele in Deutschland verschwenden jeden Monat Geld ohne es zu merken.</p>
 
   <label>Handyvertrag (€)</label>
   <input type="number" id="mobile">
@@ -106,13 +113,16 @@ button:hover {
   <label>Sonstige Kosten (€)</label>
   <input type="number" id="other">
 
-  <button onclick="calculate()">Kosten prüfen</button>
+  <button onclick="calculate()">Jetzt Einsparung prüfen</button>
 
   <div class="result" id="result"></div>
   <div class="savings" id="savings"></div>
+  <div id="offers"></div>
 
-  <div class="trust">
-    Keine Anmeldung • Keine Datenspeicherung • Sofortiges Ergebnis
+  <div class="footer">
+    <p>Werbung / Affiliate-Links möglich</p>
+    <p>Keine Datenspeicherung • Nur Berechnung im Browser</p>
+    <p>Primashop – Fahad bin Sultan, Neuenhausplatz 55, 40699 Erkrath</p>
   </div>
 </div>
 
@@ -124,15 +134,44 @@ function calculate() {
   let other = parseFloat(document.getElementById('other').value) || 0;
 
   let total = mobile + subs + gym + other;
-
-  let ideal = total * 0.7;
-  let wasted = total - ideal;
+  let wasted = total * 0.3;
 
   document.getElementById('result').innerHTML =
     "Du zahlst aktuell €" + total.toFixed(2) + " pro Monat";
 
   document.getElementById('savings').innerHTML =
-    "⚠️ Du könntest €" + wasted.toFixed(2) + " sparen";
+    "⚠️ Du könntest ca. €" + wasted.toFixed(2) + " sparen";
+
+  let offersHTML = "";
+
+  if (mobile > 25) {
+    offersHTML += `
+    <div class="offer">
+      <strong>📱 Günstiger Handyvertrag</strong><br>
+      Spare bei deinem Tarif mit aktuellen Angeboten.<br>
+      <a href="YOUR_AFFILIATE_LINK" target="_blank">Jetzt Tarif vergleichen</a>
+    </div>`;
+  }
+
+  if (subs > 15) {
+    offersHTML += `
+    <div class="offer">
+      <strong>📺 Abos optimieren</strong><br>
+      Prüfe günstigere Alternativen für deine Abos.<br>
+      <a href="YOUR_AFFILIATE_LINK" target="_blank">Jetzt sparen</a>
+    </div>`;
+  }
+
+  if (other > 50) {
+    offersHTML += `
+    <div class="offer">
+      <strong>⚡ Fixkosten reduzieren</strong><br>
+      Finde bessere Anbieter für deine monatlichen Kosten.<br>
+      <a href="YOUR_AFFILIATE_LINK" target="_blank">Angebote ansehen</a>
+    </div>`;
+  }
+
+  document.getElementById("offers").innerHTML = offersHTML;
 }
 </script>
 
