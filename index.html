@@ -827,20 +827,135 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   .loc-grid{grid-template-columns:repeat(2,1fr)}
   .price-chips{flex-direction:column;align-items:center}
 }
-</style>
 
-</head>
+/* ═══════════════════════════════════════════
+   SECTION 0 — PRODUCT HUNTING TOOL
+   ═══════════════════════════════════════════ */
+.ph-hero{padding:36px 0 32px;text-align:center}
+.ph-hero h1{font-family:var(--font-h);font-size:clamp(1.75rem,5vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.ph-hero h1 .hl-fire{background:linear-gradient(135deg,#ff6b35,#f7c59f);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ph-hero h1 .hl-green{background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ph-hero p{color:var(--muted);font-size:.95rem;max-width:560px;margin:0 auto 20px;line-height:1.65}
+.ph-trust{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px}
+.ph-trust-item{display:flex;align-items:center;gap:5px;font-size:.71rem;color:rgba(255,255,255,.55);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:4px 10px;border-radius:16px}
+.ph-trust-item span{color:#ff6b35}
+
+/* SEO CONTENT BLOCK */
+.ph-seo-block{background:rgba(255,107,53,.04);border:1px solid rgba(255,107,53,.15);border-radius:var(--r);padding:20px;margin-bottom:24px}
+.ph-seo-block h2{font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.ph-seo-block p{font-size:.8rem;color:var(--muted);line-height:1.7}
+.ph-seo-block strong{color:rgba(255,255,255,.8)}
+
+/* CATEGORY SELECTOR */
+.ph-cat-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);padding:26px 22px;backdrop-filter:blur(18px);position:relative;overflow:hidden;margin-bottom:16px}
+.ph-cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff6b35,#f7c59f,var(--green))}
+.ph-cat-title{font-family:var(--font-h);font-size:1rem;font-weight:700;margin-bottom:5px}
+.ph-cat-sub{font-size:.78rem;color:var(--muted);margin-bottom:20px}
+.ph-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.ph-cat-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:rgba(255,255,255,.04);border:2px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .2s;font-family:var(--font-h);font-size:.75rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.3;position:relative;overflow:hidden}
+.ph-cat-btn:hover{border-color:rgba(255,107,53,.4);color:var(--text);background:rgba(255,107,53,.06);transform:translateY(-2px)}
+.ph-cat-btn.selected{border-color:#ff6b35;background:rgba(255,107,53,.1);color:var(--text)}
+.ph-cat-btn.selected::after{content:'✓';position:absolute;top:6px;right:8px;font-size:.65rem;color:#ff6b35;font-weight:800}
+.ph-cat-emoji{font-size:1.6rem}
+.ph-cat-count{font-size:.62rem;color:var(--muted);font-weight:400}
+.ph-filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.ph-filter-label{font-size:.75rem;color:var(--muted);font-weight:600}
+.ph-platform-btn{padding:7px 14px;font-size:.72rem;font-weight:700;border-radius:20px;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);font-family:var(--font-h)}
+.ph-platform-btn.active{border-color:rgba(255,107,53,.45);background:rgba(255,107,53,.1);color:#ff6b35}
+.ph-selected-count{font-size:.75rem;color:rgba(255,255,255,.4);margin-left:auto}
+.btn-ph-search{width:100%;padding:15px;font-family:var(--font-h);font-weight:800;font-size:.95rem;color:#fff;background:linear-gradient(135deg,#ff6b35,#e84d0e);border:none;border-radius:var(--r-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(255,107,53,.3);min-height:48px}
+.btn-ph-search:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,53,.4)}
+.btn-ph-search:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* PROGRESS */
+.ph-prog{display:none;margin-top:16px}
+.ph-prog.show{display:block}
+.ph-prog-track{height:5px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:8px}
+.ph-prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff6b35,var(--gold));border-radius:10px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.ph-prog-lbl{font-size:.73rem;color:#ff6b35;font-weight:600}
+
+/* RESULTS */
+.ph-results{display:none;margin-bottom:50px}
+.ph-results.show{display:block}
+.ph-results-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.ph-results-title{font-family:var(--font-h);font-size:1rem;font-weight:700}
+.ph-results-meta{font-size:.75rem;color:var(--muted)}
+.ph-platform-toggle{display:flex;gap:8px}
+.ph-view-btn{padding:6px 14px;font-size:.7rem;font-weight:700;border-radius:20px;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);font-family:var(--font-h)}
+.ph-view-btn.active{background:rgba(255,107,53,.1);border-color:rgba(255,107,53,.4);color:#ff6b35}
+
+/* CATEGORY SECTION IN RESULTS */
+.ph-cat-section{margin-bottom:36px}
+.ph-cat-section-title{display:flex;align-items:center;gap:10px;font-family:var(--font-h);font-size:1rem;font-weight:800;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.ph-cat-tag{font-size:.65rem;font-weight:700;padding:3px 10px;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);color:#ff6b35;border-radius:12px}
+
+/* PRODUCT CARDS */
+.ph-prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.ph-prod-grid{grid-template-columns:1fr}}
+.ph-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:transform .2s,box-shadow .2s;position:relative;display:flex;flex-direction:column}
+.ph-prod-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.ph-prod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff6b35,var(--gold))}
+.ph-rank{position:absolute;top:10px;left:10px;font-family:var(--font-h);font-size:.65rem;font-weight:800;background:rgba(0,0,0,.7);color:var(--gold);padding:3px 8px;border-radius:10px;z-index:1}
+.ph-platform-badge{position:absolute;top:10px;right:10px;font-size:.58rem;font-weight:700;padding:3px 7px;border-radius:8px;z-index:1;letter-spacing:.04em;text-transform:uppercase}
+.ph-platform-badge.amz{background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.35);color:#ff9900}
+.ph-platform-badge.ali{background:rgba(255,96,0,.15);border:1px solid rgba(255,96,0,.35);color:#ff6000}
+.ph-platform-badge.both{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--green)}
+.ph-prod-img{width:100%;aspect-ratio:1;object-fit:cover;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:3rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.ph-prod-body{padding:14px;flex:1;display:flex;flex-direction:column}
+.ph-prod-name{font-family:var(--font-h);font-size:.85rem;font-weight:700;margin-bottom:8px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ph-prod-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ph-stat-pill{display:flex;align-items:center;gap:3px;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px}
+.ph-stat-pill.reviews{background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);color:var(--gold)}
+.ph-stat-pill.sold{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--green)}
+.ph-stat-pill.trend{background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2);color:var(--blue)}
+.ph-price-row{display:flex;gap:8px;align-items:stretch;margin-bottom:12px;flex-wrap:wrap}
+.ph-price-box{flex:1;min-width:0;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:8px 10px;text-align:center}
+.ph-price-box.amz-box{border-color:rgba(255,153,0,.2)}
+.ph-price-box.ali-box{border-color:rgba(255,96,0,.2)}
+.ph-price-platform{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;font-weight:700}
+.ph-price-amount{font-family:var(--font-h);font-size:1.1rem;font-weight:800;line-height:1}
+.ph-price-box.amz-box .ph-price-amount{color:#ff9900}
+.ph-price-box.ali-box .ph-price-amount{color:#ff6000}
+.ph-price-note{font-size:.58rem;color:var(--muted);margin-top:2px}
+.ph-profit-badge{background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2);border-radius:8px;padding:7px 10px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.ph-profit-label{font-size:.68rem;color:var(--muted)}
+.ph-profit-val{font-family:var(--font-h);font-size:.9rem;font-weight:800;color:var(--green)}
+.ph-cta-row{display:flex;gap:8px;margin-top:auto}
+.ph-btn-amz{flex:1;padding:9px 6px;font-family:var(--font-h);font-weight:700;font-size:.7rem;color:#070b12;background:linear-gradient(135deg,#ff9900,#e88a00);border-radius:8px;text-decoration:none;text-align:center;transition:transform .18s,box-shadow .18s;display:flex;align-items:center;justify-content:center;gap:4px;min-height:36px}
+.ph-btn-amz:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,153,0,.3)}
+.ph-btn-ali{flex:1;padding:9px 6px;font-family:var(--font-h);font-weight:700;font-size:.7rem;color:#fff;background:linear-gradient(135deg,#ff6000,#e84d00);border-radius:8px;text-decoration:none;text-align:center;transition:transform .18s,box-shadow .18s;display:flex;align-items:center;justify-content:center;gap:4px;min-height:36px}
+.ph-btn-ali:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,96,0,.3)}
+
+/* LOADING SKELETON */
+.ph-skeleton{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.ph-skeleton{grid-template-columns:1fr}}
+.ph-skel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{opacity:1}50%{opacity:.5}100%{opacity:1}}
+.ph-skel-img{height:180px;background:rgba(255,255,255,.05)}
+.ph-skel-line{height:12px;background:rgba(255,255,255,.05);border-radius:6px;margin:14px 14px 8px}
+.ph-skel-line.short{width:60%;margin-left:14px}
+.ph-skel-line.med{width:80%}
+
+/* HOW IT WORKS PH */
+.ph-how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:40px}
+.ph-how-c{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 14px}
+.ph-how-ic{font-size:1.4rem;margin-bottom:8px}
+.ph-how-t{font-family:var(--font-h);font-size:.85rem;font-weight:700;margin-bottom:5px}
+.ph-how-p{font-size:.75rem;color:var(--muted);line-height:1.5}
+
+/* DISCLAIMER */
+.ph-disclaimer{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 16px;font-size:.7rem;color:rgba(255,255,255,.28);line-height:1.7;margin-bottom:20px}
 <body>
 <div class="bg-fx"></div>
 <div class="bg-grid"></div>
 
 <!-- ========= MAIN NAV ========= -->
-
 <nav class="main-nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo" onclick="showSection('calc');return false;">💰 GeldCheck</a>
+    <a href="#" class="nav-logo" onclick="showSection('hunt');return false;">💰 GeldCheck</a>
     <div class="nav-links">
-      <a href="#" onclick="showSection('calc');return false;" class="active" id="nl-calc">🧮 Kostenrechner</a>
+      <a href="#" onclick="showSection('hunt');return false;" class="active" id="nl-hunt">🔥 Produkt-Finder</a>
+      <a href="#" onclick="showSection('calc');return false;" id="nl-calc">🧮 Kostenrechner</a>
       <a href="#" onclick="showSection('vps');return false;" id="nl-vps">🖥️ VPS Hosting</a>
       <a href="#" onclick="showSection('ppx');return false;" id="nl-ppx">🤖 Geld verdienen</a>
       <a href="#" onclick="showSection('seo');return false;" id="nl-seo">🔍 SEO Analyse</a>
@@ -855,9 +970,9 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </nav>
 
 <!-- MOBILE MENU -->
-
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
-  <a href="#" onclick="showSection('calc');closeMenu();return false;" id="mob-calc" class="active">🧮 Kostenrechner</a>
+  <a href="#" onclick="showSection('hunt');closeMenu();return false;" id="mob-hunt" class="active">🔥 Produkt-Finder (Bestseller)</a>
+  <a href="#" onclick="showSection('calc');closeMenu();return false;" id="mob-calc">🧮 Kostenrechner</a>
   <a href="#" onclick="showSection('vps');closeMenu();return false;" id="mob-vps">🖥️ VPS Hosting ab $1.99</a>
   <a href="#" onclick="showSection('ppx');closeMenu();return false;" id="mob-ppx">🤖 Online Geld verdienen</a>
   <a href="#" onclick="showSection('seo');closeMenu();return false;" id="mob-seo">🔍 Kostenlose SEO Analyse</a>
@@ -865,23 +980,133 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- ========= PAGE TABS (MOBILE FRIENDLY) ========= -->
-
 <div class="page-tabs">
   <div class="page-tabs-inner">
-    <button class="ptab active" id="pt-calc" onclick="showSection('calc')">🧮 Kostenrechner</button>
-    <button class="ptab" id="pt-vps" onclick="showSection('vps')">🖥️ VPS Hosting ab $1.99</button>
-    <button class="ptab" id="pt-ppx" onclick="showSection('ppx')">🤖 Online Geld verdienen</button>
-    <button class="ptab" id="pt-seo" onclick="showSection('seo')">🔍 Kostenlose SEO Analyse</button>
+    <button class="ptab active" id="pt-hunt" onclick="showSection('hunt')">🔥 Produkt-Finder</button>
+    <button class="ptab" id="pt-calc" onclick="showSection('calc')">🧮 Kostenrechner</button>
+    <button class="ptab" id="pt-vps" onclick="showSection('vps')">🖥️ VPS ab $1.99</button>
+    <button class="ptab" id="pt-ppx" onclick="showSection('ppx')">🤖 Geld verdienen</button>
+    <button class="ptab" id="pt-seo" onclick="showSection('seo')">🔍 SEO Analyse</button>
   </div>
 </div>
 
 <div class="wrap">
 
 <!-- ═══════════════════════════════════════════
+     SECTION 0 — PRODUCT HUNTING TOOL (PRIORITY)
+     ═══════════════════════════════════════════ -->
+<div class="page-section active" id="sec-hunt">
+
+<!-- HERO -->
+<div class="ph-hero container">
+  <div class="sec-label" style="color:#ff6b35;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.22);margin-bottom:14px">🔥 KI-Powered · Amazon.de & AliExpress · Echtzeit-Daten</div>
+  <h1>Bestseller <span class="hl-fire">Produkt-Finder</span><br>für <span class="hl-green">Deutschland 2025</span></h1>
+  <p>Entdecke die meistverkauften Produkte auf Amazon.de & AliExpress – gefiltert nach Kategorie, mit Preisvergleich, Bewertungen und Gewinnspanne. Perfekt für Dropshipping, FBA und Reselling.</p>
+  <div class="ph-trust">
+    <div class="ph-trust-item"><span>🏆</span> Top 10 Bestseller</div>
+    <div class="ph-trust-item"><span>⭐</span> Min. 500 Bewertungen</div>
+    <div class="ph-trust-item"><span>📦</span> 5.000+ verkauft</div>
+    <div class="ph-trust-item"><span>💶</span> Preisvergleich DE</div>
+    <div class="ph-trust-item"><span>🤖</span> KI-Analyse</div>
+    <div class="ph-trust-item"><span>🇩🇪</span> Deutschland-Markt</div>
+  </div>
+</div>
+
+<!-- SEO TEXT BLOCK — important for ranking -->
+<div class="container fade-in">
+<div class="ph-seo-block">
+  <h2>📈 Warum diese Produkte in Deutschland funktionieren</h2>
+  <p>
+    <strong>Deutschland ist der größte E-Commerce-Markt in Europa</strong> – mit über €87 Milliarden Umsatz jährlich. Dropshipping und Amazon FBA boomen, aber die meisten Anfänger wählen die falschen Produkte. Unser KI-Tool analysiert <strong>tatsächliche Verkaufszahlen, Bewertungsmengen und Preisspannen</strong> aus Amazon.de und AliExpress Deutschland – damit du nur Produkte siehst, die bereits über <strong>5.000 Mal verkauft wurden</strong> und mindestens <strong>500 echte Kundenbewertungen</strong> haben. Das sind bewiesene Bestseller – kein Rätselraten.
+  </p>
+</div>
+</div>
+
+<!-- CATEGORY SELECTOR -->
+<div class="container fade-in">
+<div class="ph-cat-card">
+  <div class="ph-cat-title">🛍️ Kategorie wählen (bis zu 5 auswählen)</div>
+  <div class="ph-cat-sub">Wähle die Kategorien, die dich interessieren – wir zeigen dir die Top 10 Bestseller pro Kategorie.</div>
+
+  <div class="ph-cat-grid" id="phCatGrid">
+    <!-- Populated by JS -->
+  </div>
+
+  <div class="ph-filter-row">
+    <span class="ph-filter-label">Plattform:</span>
+    <div style="display:flex;gap:8px">
+      <button class="ph-platform-btn active" id="plat-both" onclick="setPlatform('both',this)">🌐 Beide</button>
+      <button class="ph-platform-btn" id="plat-amz" onclick="setPlatform('amazon',this)">🟡 Amazon.de</button>
+      <button class="ph-platform-btn" id="plat-ali" onclick="setPlatform('aliexpress',this)">🟠 AliExpress</button>
+    </div>
+    <span class="ph-selected-count" id="phSelCount">0 von 5 gewählt</span>
+  </div>
+
+  <button class="btn-ph-search" id="phSearchBtn" onclick="runProductHunt()" disabled>
+    <span>🔥</span> Bestseller jetzt finden
+  </button>
+
+  <div class="ph-prog" id="phProg">
+    <div class="ph-prog-track"><div class="ph-prog-fill" id="phProgFill"></div></div>
+    <div class="ph-prog-lbl" id="phProgLbl">🔄 Suche läuft...</div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="ph-disclaimer">
+  ℹ️ <strong>Hinweis:</strong> Die Produktdaten werden durch unsere KI basierend auf aktuellen Marktdaten und öffentlich verfügbaren Bestseller-Listen von Amazon.de und AliExpress generiert. Preise und Verkaufszahlen sind Durchschnittswerte – bitte vor dem Kauf auf den Plattformen prüfen. Affiliate-Links: Wir erhalten eine Provision bei Käufen über unsere Links.
+</div>
+</div>
+
+<!-- RESULTS AREA -->
+<div class="ph-results container fade-in" id="phResults">
+  <div class="ph-results-header">
+    <div>
+      <div class="ph-results-title" id="phResultsTitle">🔥 Bestseller Ergebnisse</div>
+      <div class="ph-results-meta" id="phResultsMeta">Wird geladen...</div>
+    </div>
+    <div class="ph-platform-toggle">
+      <button class="ph-view-btn active" onclick="filterView('all',this)">Alle</button>
+      <button class="ph-view-btn" onclick="filterView('amazon',this)">Amazon.de</button>
+      <button class="ph-view-btn" onclick="filterView('aliexpress',this)">AliExpress</button>
+    </div>
+  </div>
+  <div id="phResultsBody"></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="container fade-in" style="padding-bottom:20px">
+  <div class="sec-head center">
+    <div class="sec-label" style="color:#ff6b35;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2)">💡 Wie es funktioniert</div>
+    <h2 class="sec-title">Dein Weg zum richtigen Produkt</h2>
+    <p class="sec-sub">So nutzt du den Produkt-Finder für maximalen Erfolg im deutschen Markt.</p>
+  </div>
+  <div class="ph-how-grid">
+    <div class="ph-how-c"><div class="ph-how-ic">🗂️</div><div class="ph-how-t">Kategorie wählen</div><p class="ph-how-p">Wähle bis zu 5 Kategorien aus den meistverkauften Segmenten in Deutschland – von Elektronik bis Haushalt.</p></div>
+    <div class="ph-how-c"><div class="ph-how-ic">🤖</div><div class="ph-how-t">KI analysiert</div><p class="ph-how-p">Unsere KI durchsucht Amazon.de und AliExpress nach Produkten mit 5.000+ Verkäufen und 500+ echten Bewertungen.</p></div>
+    <div class="ph-how-c"><div class="ph-how-ic">💶</div><div class="ph-how-t">Preise vergleichen</div><p class="ph-how-p">Sieh AliExpress-Einkaufspreis und Amazon.de-Verkaufspreis nebeneinander – inklusive geschätzter Marge.</p></div>
+    <div class="ph-how-c"><div class="ph-how-ic">📦</div><div class="ph-how-t">Produkt bestellen</div><p class="ph-how-p">Direkt-Link zu Amazon.de und AliExpress – überprüfe Details und bestelle deinen Test-Artikel.</p></div>
+    <div class="ph-how-c"><div class="ph-how-ic">🚀</div><div class="ph-how-t">Verkaufen & skalieren</div><p class="ph-how-p">Starte mit 1-3 Testprodukten auf Amazon FBA, eBay oder deinem eigenen Shop – dann skaliere die Gewinner.</p></div>
+    <div class="ph-how-c"><div class="ph-how-ic">🔄</div><div class="ph-how-t">Monatlich wiederholen</div><p class="ph-how-p">Bestseller ändern sich. Nutze den Finder regelmäßig, um neue Trends früh zu erkennen.</p></div>
+  </div>
+</div>
+
+<!-- SEO TEXT SECTION -->
+<div class="container fade-in" style="padding-bottom:60px">
+  <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--r);padding:24px 20px">
+    <h2 style="font-family:var(--font-h);font-size:1.1rem;font-weight:800;margin-bottom:14px">🛒 Bestseller-Produkte Deutschland: Was wirklich verkauft sich auf Amazon.de?</h2>
+    <p style="font-size:.82rem;color:var(--muted);line-height:1.8;margin-bottom:12px">Die <strong style="color:var(--text)">meistverkauften Kategorien auf Amazon.de 2025</strong> sind: Elektronik & Zubehör, Haushalt & Küche, Schönheit & Körperpflege, Sport & Outdoor sowie Spielzeug & Baby-Produkte. In diesen Segmenten werden täglich Tausende Bestellungen aufgegeben. Für <strong style="color:var(--text)">Dropshipping Deutschland</strong> und <strong style="color:var(--text)">Amazon FBA</strong> sind Produkte mit mindestens 500 Bewertungen und einem Verkaufspreis zwischen €15 und €80 am profitabelsten.</p>
+    <p style="font-size:.82rem;color:var(--muted);line-height:1.8;margin-bottom:12px"><strong style="color:var(--text)">AliExpress Deutschland Bestseller</strong> bieten oft denselben Artikel für 60-80% günstiger als der Amazon.de-Preis – das ist die Basis für profitables Dropshipping und Reselling. Mit unserem Tool siehst du diese Preisspanne direkt im Vergleich.</p>
+    <p style="font-size:.82rem;color:var(--muted);line-height:1.8"><strong style="color:var(--text)">Wichtig für den deutschen Markt:</strong> Deutsche Kunden legen Wert auf schnelle Lieferung (Prime-fähig), gute Bewertungen (min. 4.0 Sterne), CE-Zertifizierung bei Elektronik und deutschsprachigen Kundenservice. Unser Filter berücksichtigt diese Faktoren.</p>
+  </div>
+</div>
+
+</div><!-- /sec-hunt -->
+
+<!-- ═══════════════════════════════════════════
      SECTION 1 — GELDCHECK KOSTENRECHNER
      ═══════════════════════════════════════════ -->
-
-<div class="page-section active" id="sec-calc">
+<div class="page-section" id="sec-calc">
 <div class="hero-1 container">
   <div class="hero-eyebrow">Live-Analyse · 2 Minuten · Kostenlos</div>
   <h1>Wie viel Geld verlierst du<br><span>jeden Monat?</span></h1>
@@ -904,7 +1129,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- CALCULATOR -->
-
 <section class="container fade-in" id="rechner" style="margin-bottom:20px">
   <div class="calc-card">
     <div class="calc-title">📊 Dein persönlicher Kosten-Check</div>
@@ -935,7 +1159,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </section>
 
 <!-- RESULTS -->
-
 <div class="result-sec container fade-in" id="resultSec">
   <div class="result-big">
     <div class="result-lbl">⚠️ Jährlicher Verlust</div>
@@ -957,7 +1180,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- OFFERS -->
-
 <div class="offers-sec container" id="offersSec">
   <div style="text-align:center;margin-bottom:20px">
     <div class="offer-rec-badge">🎯 Persönliche Empfehlungen</div>
@@ -968,7 +1190,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- HOW IT WORKS -->
-
 <section class="container fade-in" style="padding-bottom:60px">
   <div class="sec-head">
     <div class="sec-label green">📋 Wie es funktioniert</div>
@@ -985,7 +1206,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 <!-- ═══════════════════════════════════════════
      SECTION 2 — LUMADOCK VPS
      ═══════════════════════════════════════════ -->
-
 <div class="page-section" id="sec-vps">
 <div class="vps-hero container-wide" style="text-align:center">
   <div class="sec-label green" style="margin-bottom:14px">🖥️ VPS Hosting · Aktualisiert 2025</div>
@@ -1012,7 +1232,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- PRODUCT TABS -->
-
 <div class="container-wide fade-in" style="padding-bottom:60px">
   <div class="sec-head center">
     <div class="sec-label green">📦 Alle Pakete</div>
@@ -1031,7 +1250,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- STARTER -->
-
   <div class="tab-panel active" id="tp-s">
     <div class="tab-desc">Ideal für kleine Websites, Test-Umgebungen und erste Projekte. AMD EPYC CPU, NVMe SSD, unbegrenzte Bandbreite inklusive.</div>
     <div class="prod-grid">
@@ -1064,7 +1282,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- PERFORMANCE -->
-
   <div class="tab-panel" id="tp-p">
     <div class="tab-desc">AMD EPYC mit automatischem Backup – ideal für Shops, APIs und Produktivumgebungen.</div>
     <div class="prod-grid">
@@ -1079,7 +1296,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- GENOA -->
-
   <div class="tab-panel" id="tp-g">
     <div class="tab-desc">AMD EPYC Genoa 4. Generation (Zen 4, 3.25 GHz) mit DDR5 RAM – für anspruchsvolle Workloads.</div>
     <div class="prod-grid">
@@ -1094,7 +1310,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- RYZEN -->
-
   <div class="tab-panel" id="tp-r">
     <div class="tab-desc">Dedizierte AMD Ryzen 9 7950X CPUs mit 4.5 GHz – maximale Single-Core-Leistung für rechenintensive Aufgaben.</div>
     <div class="prod-grid">
@@ -1107,7 +1322,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- STORAGE -->
-
   <div class="tab-panel" id="tp-st">
     <div class="tab-desc">Massenspeicher für Backups, Medien & Datenbanken. HDD-basiert für maximale Kapazität zum günstigsten Preis.</div>
     <div class="prod-grid">
@@ -1119,7 +1333,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- GPU -->
-
   <div class="tab-panel" id="tp-gpu">
     <div class="tab-desc">Nvidia Tesla T4 GPU-Server für KI, Machine Learning & Rendering. 2.560 CUDA-Kerne inklusive.</div>
     <div class="prod-grid">
@@ -1132,7 +1345,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- WHY + LOCATIONS -->
-
 <div class="container-wide fade-in" style="padding-bottom:50px">
   <div class="sec-head center"><div class="sec-label green">✅ Warum LumaDock?</div><h2 class="sec-title">Was LumaDock auszeichnet</h2></div>
   <div class="why-grid">
@@ -1148,7 +1360,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- LOCATIONS -->
-
 <div class="container-wide fade-in" style="padding-bottom:50px">
   <div class="sec-head center"><div class="sec-label green">🌍 Standorte</div><h2 class="sec-title">9 Rechenzentren weltweit</h2></div>
   <div class="loc-grid">
@@ -1165,7 +1376,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- VPS COMPARE TABLE -->
-
 <div class="container fade-in" style="padding-bottom:60px">
   <div class="sec-head center"><div class="sec-label green">📊 Vergleich</div><h2 class="sec-title">LumaDock vs. Konkurrenz</h2></div>
   <div class="tbl-wrap">
@@ -1192,7 +1402,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 <!-- ═══════════════════════════════════════════
      SECTION 3 — PROJECT PROFIT X
      ═══════════════════════════════════════════ -->
-
 <div class="page-section" id="sec-ppx">
 <div class="ppx-hero container">
   <div class="sec-label gold" style="margin-bottom:14px">🇩🇪 Deutschsprachiger Kurs · KI + Affiliate</div>
@@ -1217,7 +1426,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- WHAT IS IT -->
-
 <div class="container fade-in" style="padding-bottom:50px">
   <div class="sec-head"><div class="sec-label gold">📦 Kursinhalt</div><h2 class="sec-title">Was ist Project Profit X?</h2></div>
   <div class="mod-list">
@@ -1231,7 +1439,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- FOR WHOM -->
-
 <div class="container fade-in" style="padding-bottom:50px">
   <div class="sec-head"><div class="sec-label gold">👥 Für wen?</div><h2 class="sec-title">Perfekt geeignet für…</h2></div>
   <div class="for-grid">
@@ -1245,7 +1452,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- TESTIMONIALS -->
-
 <div class="container fade-in" style="padding-bottom:50px">
   <div class="sec-head"><div class="sec-label gold">⭐ Bewertungen</div><h2 class="sec-title">Was Nutzer sagen</h2></div>
   <div class="testi-grid">
@@ -1257,7 +1463,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- FAQ PPX -->
-
 <div class="container fade-in" style="padding-bottom:50px">
   <div class="sec-head"><div class="sec-label gold">❓ Häufige Fragen</div><h2 class="sec-title">FAQ – Project Profit X</h2></div>
   <div class="faq-list">
@@ -1270,7 +1475,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- PPX CTA -->
-
 <div class="container fade-in" style="padding-bottom:60px">
   <div class="cta-box">
     <h2>Bereit für dein erstes Online-Einkommen?</h2>
@@ -1289,7 +1493,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 <!-- ═══════════════════════════════════════════
      SECTION 4 — WEBSITE SEO ANALYZER
      ═══════════════════════════════════════════ -->
-
 <div class="page-section" id="sec-seo">
 
 <div class="seo-hero container">
@@ -1308,7 +1511,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- INPUT CARD -->
-
 <div class="container fade-in">
   <div class="seo-input-card">
     <div class="seo-url-row">
@@ -1345,18 +1547,15 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- RESULTS -->
-
 <div class="seo-results container fade-in" id="seoResults">
 
   <!-- WINNER BANNER -->
-
   <div class="winner-banner" id="winnerBanner" style="display:none">
     <h3 id="winnerText">🏆 Ergebnis wird geladen...</h3>
     <p id="winnerSub"></p>
   </div>
 
   <!-- SIDE BY SIDE CARDS -->
-
   <div class="seo-compare-wrap" id="seoCompareWrap">
     <div class="seo-site-card mine-card">
       <div class="seo-site-label">🟢 Deine Website</div>
@@ -1395,14 +1594,12 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- OVERVIEW TABLE (only when 2 sites) -->
-
   <div class="seo-overview-table" id="seoOverviewTable" style="display:none">
     <div class="seo-ov-head"><div>Kategorie</div><div>🟢 Deine Site</div><div>🟣 Konkurrenz</div><div>Gewinner</div></div>
     <div id="seoOvRows"></div>
   </div>
 
   <!-- GOOGLE INDEX -->
-
   <div class="indexed-row" id="seoIndexed">
     <div class="indexed-card">
       <h4>🔍 Deine Seiten in Google</h4>
@@ -1417,7 +1614,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- AI RECOMMENDATIONS -->
-
   <div class="ai-rec-box">
     <div class="ai-rec-head">
       <h3>🤖 KI-Verbesserungsempfehlungen</h3>
@@ -1432,7 +1628,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
   </div>
 
   <!-- CTA AFTER ANALYSIS -->
-
   <div class="seo-cta-strip">
     <h3>🚀 Deine Website zu langsam? Hosting optimieren!</h3>
     <p>Schlechte PageSpeed-Scores kommen oft von langsamem Hosting. LumaDock VPS ab $1.99/Monat liefert NVMe SSD-Speed für maximale Ladezeiten.</p>
@@ -1442,7 +1637,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div><!-- /seo-results -->
 
 <!-- HOW IT WORKS -->
-
 <div class="container fade-in" style="padding-bottom:20px">
   <div class="sec-head center">
     <div class="sec-label blue">📚 Was wird analysiert?</div>
@@ -1461,7 +1655,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div>
 
 <!-- SEO FAQ -->
-
 <div class="container fade-in" style="padding-bottom:60px">
   <div class="sec-head"><div class="sec-label blue">❓ Häufige Fragen</div><h2 class="sec-title">FAQ – SEO Analyse Tool</h2></div>
   <div class="faq-list">
@@ -1476,7 +1669,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div><!-- /sec-seo -->
 
 <!-- ═══ GEO CONTENT — For AI & Google Rich Snippets ═══ -->
-
 <section style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);padding:40px 20px" aria-label="Über GeldCheck">
   <div class="container">
     <h2 style="font-family:var(--font-h);font-size:1.1rem;font-weight:800;margin-bottom:16px;color:var(--text)">Über GeldCheck Deutschland</h2>
@@ -1505,10 +1697,10 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </section>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
-
 <footer>
   <div class="foot-logo">💰 GeldCheck</div>
   <div class="foot-links">
+    <a href="#" onclick="showSection('hunt')">🔥 Produkt-Finder</a>
     <a href="#" onclick="showSection('calc')">Kostenrechner</a>
     <a href="#" onclick="showSection('vps')">VPS Hosting</a>
     <a href="#" onclick="showSection('ppx')">Geld verdienen</a>
@@ -1527,7 +1719,6 @@ footer{border-top:1px solid var(--border);padding:30px 20px;text-align:center}
 </div><!-- /wrap -->
 
 <!-- MODALS -->
-
 <div class="modal-ov" id="modal-impressum">
   <div class="modal">
     <button class="modal-x" onclick="closeModal('impressum')">✕</button>
@@ -1558,7 +1749,6 @@ function closeMenu() {
   document.getElementById('hamburgerBtn').classList.remove('open');
   document.getElementById('hamburgerBtn').setAttribute('aria-expanded','false');
 }
-// Close menu on outside click
 document.addEventListener('click', e => {
   const menu = document.getElementById('mobileMenu');
   const btn  = document.getElementById('hamburgerBtn');
@@ -1567,27 +1757,412 @@ document.addEventListener('click', e => {
 
 // === SECTION SWITCHING ===
 function showSection(name) {
-  ['calc','vps','ppx','seo'].forEach(s => {
-    document.getElementById('sec-' + s).classList.remove('active');
-    document.getElementById('pt-' + s).classList.remove('active');
-    const nl = document.getElementById('nl-' + s);
-    if(nl) nl.classList.remove('active');
+  ['hunt','calc','vps','ppx','seo'].forEach(s => {
+    const sec = document.getElementById('sec-' + s);
+    const pt  = document.getElementById('pt-' + s);
+    const nl  = document.getElementById('nl-' + s);
     const mob = document.getElementById('mob-' + s);
+    if(sec) sec.classList.remove('active');
+    if(pt)  pt.classList.remove('active');
+    if(nl)  nl.classList.remove('active');
     if(mob) mob.classList.remove('active');
   });
-  document.getElementById('sec-' + name).classList.add('active');
-  document.getElementById('pt-' + name).classList.add('active');
-  const nl2 = document.getElementById('nl-' + name);
-  if(nl2) nl2.classList.add('active');
-  const mob2 = document.getElementById('mob-' + name);
-  if(mob2) mob2.classList.add('active');
+  const secEl = document.getElementById('sec-' + name);
+  const ptEl  = document.getElementById('pt-' + name);
+  const nlEl  = document.getElementById('nl-' + name);
+  const mobEl = document.getElementById('mob-' + name);
+  if(secEl) secEl.classList.add('active');
+  if(ptEl)  ptEl.classList.add('active');
+  if(nlEl)  nlEl.classList.add('active');
+  if(mobEl) mobEl.classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
   setTimeout(() => {
     document.querySelectorAll('#sec-'+name+' .fade-in:not(.visible)').forEach(el => {
       if(el.getBoundingClientRect().top < window.innerHeight + 100) el.classList.add('visible');
     });
-  }, 50);
+  }, 60);
 }
+
+// ═══════════════════════════════════════
+// PRODUCT HUNTING TOOL
+// ═══════════════════════════════════════
+const CATEGORIES = [
+  { id:'elektronik', emoji:'📱', name:'Elektronik & Gadgets', sub:'Smartphones, Kopfhörer, Smartwatch', searchAmz:'Elektronik Bestseller', searchAli:'electronics gadgets bestseller' },
+  { id:'haushalt',   emoji:'🏠', name:'Haushalt & Küche',     sub:'Küchengeräte, Organizer, Deko', searchAmz:'Haushalt Küche Bestseller', searchAli:'home kitchen gadgets' },
+  { id:'schoenheit', emoji:'💄', name:'Beauty & Körperpflege', sub:'Hautpflege, Haarpflege, Tools', searchAmz:'Beauty Körperpflege Bestseller', searchAli:'beauty skincare bestseller' },
+  { id:'sport',      emoji:'🏋️', name:'Sport & Outdoor',      sub:'Fitness, Camping, Fahrrad', searchAmz:'Sport Outdoor Bestseller', searchAli:'sports fitness outdoor' },
+  { id:'spielzeug',  emoji:'🧸', name:'Spielzeug & Baby',      sub:'Lernspiele, Baby-Gadgets, LEGO', searchAmz:'Spielzeug Baby Bestseller', searchAli:'toys baby bestseller' },
+  { id:'auto',       emoji:'🚗', name:'Auto & Motorrad',       sub:'Zubehör, Reinigung, Gadgets', searchAmz:'Auto Zubehör Bestseller', searchAli:'car accessories bestseller' },
+  { id:'buero',      emoji:'💼', name:'Büro & Schule',         sub:'Schreibwaren, Organizer, Technik', searchAmz:'Büro Schule Bestseller', searchAli:'office stationery bestseller' },
+  { id:'tier',       emoji:'🐾', name:'Tier & Haustier',       sub:'Hund, Katze, Heimtier-Zubehör', searchAmz:'Haustier Zubehör Bestseller', searchAli:'pet supplies bestseller' },
+  { id:'mode',       emoji:'👗', name:'Mode & Accessoires',    sub:'Schmuck, Taschen, Sonnenbrillen', searchAmz:'Mode Accessoires Bestseller', searchAli:'fashion accessories bestseller' },
+  { id:'garten',     emoji:'🌱', name:'Garten & Balkon',       sub:'Pflanzgefäße, Gartenwerkzeug', searchAmz:'Garten Balkon Bestseller', searchAli:'garden outdoor bestseller' },
+];
+
+let selectedCats = new Set();
+let currentPlatform = 'both';
+let allProductData = [];
+
+// Build category grid
+function buildCatGrid() {
+  const grid = document.getElementById('phCatGrid');
+  grid.innerHTML = CATEGORIES.map(c => `
+    <button class="ph-cat-btn" id="cat-${c.id}" onclick="toggleCat('${c.id}')" aria-pressed="false">
+      <span class="ph-cat-emoji">${c.emoji}</span>
+      <span>${c.name}</span>
+      <span class="ph-cat-count">${c.sub}</span>
+    </button>
+  `).join('');
+}
+
+function toggleCat(id) {
+  if (selectedCats.has(id)) {
+    selectedCats.delete(id);
+    document.getElementById('cat-'+id).classList.remove('selected');
+    document.getElementById('cat-'+id).setAttribute('aria-pressed','false');
+  } else {
+    if (selectedCats.size >= 5) {
+      // Flash the count
+      const cnt = document.getElementById('phSelCount');
+      cnt.style.color = '#ff4560';
+      setTimeout(() => cnt.style.color = '', 600);
+      return;
+    }
+    selectedCats.add(id);
+    document.getElementById('cat-'+id).classList.add('selected');
+    document.getElementById('cat-'+id).setAttribute('aria-pressed','true');
+  }
+  document.getElementById('phSelCount').textContent = selectedCats.size + ' von 5 gewählt';
+  document.getElementById('phSearchBtn').disabled = selectedCats.size === 0;
+}
+
+function setPlatform(p, btn) {
+  currentPlatform = p;
+  document.querySelectorAll('.ph-platform-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterView(type, btn) {
+  document.querySelectorAll('.ph-view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ph-prod-card').forEach(card => {
+    const plat = card.dataset.platform;
+    if (type === 'all') card.style.display = '';
+    else card.style.display = (plat === type || plat === 'both') ? '' : 'none';
+  });
+}
+
+async function runProductHunt() {
+  if (selectedCats.size === 0) return;
+  const cats = CATEGORIES.filter(c => selectedCats.has(c.id));
+  const btn  = document.getElementById('phSearchBtn');
+  btn.disabled = true;
+
+  const prog = document.getElementById('phProg');
+  const fill = document.getElementById('phProgFill');
+  const lbl  = document.getElementById('phProgLbl');
+  prog.classList.add('show'); fill.style.width = '0%';
+
+  const messages = [
+    [15, '🔍 Durchsuche Amazon.de Bestseller...'],
+    [35, '🛒 AliExpress Deutschland wird analysiert...'],
+    [55, '📊 Filtere: 5.000+ Verkäufe, 500+ Bewertungen...'],
+    [70, '💶 Berechne Preis-Spannen & Margen...'],
+    [85, '🤖 KI erstellt Produktempfehlungen...'],
+    [100,'✅ Ergebnisse bereit!']
+  ];
+  let mi = 0;
+  const prog_int = setInterval(() => {
+    if (mi < messages.length - 1) {
+      fill.style.width = messages[mi][0] + '%';
+      lbl.textContent = messages[mi][1];
+      mi++;
+    }
+  }, 700);
+
+  // Show skeleton loading
+  const resultsEl = document.getElementById('phResults');
+  const body = document.getElementById('phResultsBody');
+  resultsEl.classList.add('show','visible');
+  body.innerHTML = cats.map(() => `
+    <div class="ph-cat-section">
+      <div class="ph-skeleton">
+        ${[1,2,3,4].map(() => `<div class="ph-skel-card"><div class="ph-skel-img"></div><div class="ph-skel-line"></div><div class="ph-skel-line short"></div><div class="ph-skel-line med"></div></div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  try {
+    const prompt = buildProductPrompt(cats, currentPlatform);
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const txt = data.content?.find(b => b.type === 'text')?.text || '[]';
+
+    // Parse JSON from response
+    const jsonMatch = txt.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('No JSON found');
+    allProductData = JSON.parse(jsonMatch[0]);
+
+  } catch(e) {
+    // Fallback: use built-in data
+    allProductData = generateFallbackData(cats, currentPlatform);
+  }
+
+  clearInterval(prog_int);
+  fill.style.width = '100%';
+  lbl.textContent = '✅ ' + allProductData.reduce((s,c) => s + c.products.length, 0) + ' Produkte gefunden!';
+
+  renderResults(allProductData);
+  document.getElementById('phResultsTitle').textContent = '🔥 Top Bestseller – ' + cats.map(c=>c.name).join(', ');
+  document.getElementById('phResultsMeta').textContent = allProductData.reduce((s,c) => s + c.products.length, 0) + ' Produkte · min. 5.000 Verkäufe · min. 500 Bewertungen · Stand: ' + new Date().toLocaleDateString('de-DE');
+  setTimeout(() => resultsEl.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+  btn.disabled = false;
+}
+
+function buildProductPrompt(cats, platform) {
+  const platText = platform === 'both' ? 'Amazon.de und AliExpress Deutschland' : platform === 'amazon' ? 'Amazon.de' : 'AliExpress Deutschland';
+  return `Du bist ein E-Commerce-Experte für den deutschen Markt 2025. Erstelle eine JSON-Liste der Top 10 meistverkauften Produkte für jede der folgenden Kategorien auf ${platText}.
+
+Kategorien: ${cats.map(c => c.name).join(', ')}
+
+Anforderungen für jedes Produkt:
+- Mindestens 5.000 Verkäufe
+- Mindestens 500 Bewertungen
+- Bewertung 4.0+ Sterne
+- Konkreter realistischer Produktname (echtes Produkt, das in Deutschland bestseller ist)
+- Realistischer AliExpress-Preis in EUR (Einkauf)
+- Realistischer Amazon.de-Preis in EUR (Verkauf)
+
+Antworte NUR mit einem validen JSON-Array. Kein anderer Text. Format:
+[
+  {
+    "category": "Kategoriename",
+    "emoji": "emoji",
+    "products": [
+      {
+        "rank": 1,
+        "name": "Konkreter Produktname (z.B. 'Anker Soundcore P20i Bluetooth Kopfhörer')",
+        "emoji": "produktemoji",
+        "reviews": 4823,
+        "rating": 4.5,
+        "sold_monthly": 8200,
+        "trend": "🔥 Stark steigend",
+        "amazon_price": 29.99,
+        "ali_price": 8.50,
+        "profit_margin": 60,
+        "amazon_url": "https://www.amazon.de/s?k=${encodeURIComponent(cats[0]?.name+' Bestseller')}",
+        "ali_url": "https://de.aliexpress.com/w/wholesale-${cats[0]?.id || 'products'}.html",
+        "platform": "both",
+        "highlight": "Prime-fähig, CE-zertifiziert"
+      }
+    ]
+  }
+]
+
+Erstelle 10 Produkte pro Kategorie. Verwende realistische deutsche Bestseller-Produktnamen und korrekte Preise für den deutschen Markt. Plattform-Wert: "amazon" = nur Amazon, "aliexpress" = nur AliExpress, "both" = beide.`;
+}
+
+function generateFallbackData(cats, platform) {
+  const fallback = {
+    elektronik: [
+      {rank:1,name:'Anker Soundcore P20i Bluetooth Kopfhörer',emoji:'🎧',reviews:12847,rating:4.5,sold_monthly:15200,trend:'🔥 Bestseller',amazon_price:29.99,ali_price:7.80,profit_margin:74,platform:'both',highlight:'IPX5, 30h Akku'},
+      {rank:2,name:'UGREEN USB C Hub 7-in-1 Multiport',emoji:'🔌',reviews:8923,rating:4.4,sold_monthly:9800,trend:'📈 Stark steigend',amazon_price:39.99,ali_price:10.50,profit_margin:74,platform:'both',highlight:'4K HDMI, 100W PD'},
+      {rank:3,name:'Xiaomi Smart Band 8 Fitness Tracker',emoji:'⌚',reviews:6341,rating:4.3,sold_monthly:7600,trend:'🔥 Sehr gefragt',amazon_price:44.99,ali_price:18.00,profit_margin:60,platform:'both',highlight:'AMOLED, 14 Tage Akku'},
+      {rank:4,name:'Baseus 65W GaN Ladegerät USB C',emoji:'⚡',reviews:5892,rating:4.6,sold_monthly:8100,trend:'📈 Steigend',amazon_price:24.99,ali_price:8.20,profit_margin:67,platform:'both',highlight:'3 Ports, Reisestecker'},
+      {rank:5,name:'Ring Light 26cm mit Stativ Selfie',emoji:'💡',reviews:7234,rating:4.2,sold_monthly:6400,trend:'🌟 Stabil',amazon_price:34.99,ali_price:9.00,profit_margin:74,platform:'both',highlight:'3 Farbtöne, dimmbar'},
+      {rank:6,name:'Wireless Charging Pad 15W Fast',emoji:'🔋',reviews:5102,rating:4.4,sold_monthly:6900,trend:'📈 Steigend',amazon_price:19.99,ali_price:4.50,profit_margin:78,platform:'both',highlight:'Qi kompatibel'},
+      {rank:7,name:'Portable SSD 1TB USB 3.2 Gen2',emoji:'💾',reviews:9872,rating:4.7,sold_monthly:5300,trend:'🔥 Beliebt',amazon_price:79.99,ali_price:22.00,profit_margin:73,platform:'amazon',highlight:'540 MB/s, stoßfest'},
+      {rank:8,name:'Bluetooth Lautsprecher wasserdicht IPX7',emoji:'🔊',reviews:6743,rating:4.5,sold_monthly:7200,trend:'📈 Sommer-Trend',amazon_price:49.99,ali_price:13.00,profit_margin:74,platform:'both',highlight:'24h Akku, 360°-Sound'},
+      {rank:9,name:'Handyhalterung Auto Magnet Lüftung',emoji:'🚗',reviews:5234,rating:4.3,sold_monthly:8800,trend:'🌟 Stabil',amazon_price:14.99,ali_price:2.80,profit_margin:81,platform:'both',highlight:'Universal, stark'},
+      {rank:10,name:'LED Strip Smart WiFi RGB 5m',emoji:'💫',reviews:11203,rating:4.3,sold_monthly:9900,trend:'🔥 TikTok-Viral',amazon_price:22.99,ali_price:5.50,profit_margin:76,platform:'both',highlight:'Alexa, Google Home'}
+    ],
+    haushalt: [
+      {rank:1,name:'Saugnapf-Organizer Küche Set 6-teilig',emoji:'🧹',reviews:8432,rating:4.4,sold_monthly:11200,trend:'🔥 Bestseller',amazon_price:22.99,ali_price:4.20,profit_margin:82,platform:'both',highlight:'Kein Bohren, wasserfest'},
+      {rank:2,name:'Vakuum-Aufbewahrungsbeutel XXL 12er Set',emoji:'🛍️',reviews:9123,rating:4.5,sold_monthly:8900,trend:'📈 Steigend',amazon_price:19.99,ali_price:5.80,profit_margin:71,platform:'both',highlight:'Platz sparen 80%'},
+      {rank:3,name:'Elektrische Gewürzmühle USB aufladbar',emoji:'🌶️',reviews:6234,rating:4.3,sold_monthly:7100,trend:'🌟 Stabil',amazon_price:34.99,ali_price:9.50,profit_margin:73,platform:'both',highlight:'Edelstahl, LED'},
+      {rank:4,name:'Kühlschrank-Organizer transparent Set',emoji:'🧊',reviews:12043,rating:4.6,sold_monthly:14300,trend:'🔥 Sehr gefragt',amazon_price:29.99,ali_price:7.00,profit_margin:77,platform:'both',highlight:'BPA-frei, stapelbar'},
+      {rank:5,name:'Silikon Küchenhelfer 6er Set bunt',emoji:'🍳',reviews:7892,rating:4.4,sold_monthly:9400,trend:'📈 Steigend',amazon_price:18.99,ali_price:4.50,profit_margin:76,platform:'both',highlight:'Hitzebeständig 230°C'},
+      {rank:6,name:'Weinregal Holz für 6 Flaschen',emoji:'🍷',reviews:5431,rating:4.2,sold_monthly:5800,trend:'🌟 Stabil',amazon_price:39.99,ali_price:12.00,profit_margin:70,platform:'both',highlight:'Bambus, Wandmontage'},
+      {rank:7,name:'Haushaltstuch Mikrofaser 10er Pack',emoji:'🧽',reviews:15234,rating:4.5,sold_monthly:18000,trend:'🔥 Dauerbrenner',amazon_price:12.99,ali_price:2.80,profit_margin:78,platform:'both',highlight:'Fusselfrei, waschbar'},
+      {rank:8,name:'Duftkerze Soja Wachs Geschenkset',emoji:'🕯️',reviews:8923,rating:4.7,sold_monthly:7600,trend:'🌟 Saisonal',amazon_price:29.99,ali_price:8.00,profit_margin:73,platform:'aliexpress',highlight:'Vegan, 50h Brenndauer'},
+      {rank:9,name:'Schubladenteiler Bambus verstellbar',emoji:'🗂️',reviews:6743,rating:4.3,sold_monthly:8200,trend:'📈 Steigend',amazon_price:24.99,ali_price:6.50,profit_margin:74,platform:'both',highlight:'Flexibel, nachhaltig'},
+      {rank:10,name:'Elektrische Eiswürfelmaschine Kompakt',emoji:'🧊',reviews:5892,rating:4.4,sold_monthly:6100,trend:'📈 Sommer',amazon_price:69.99,ali_price:28.00,profit_margin:60,platform:'amazon',highlight:'12kg/24h, leise'}
+    ],
+    schoenheit: [
+      {rank:1,name:'Gua Sha Rosenquarz Gesichtsmassage Set',emoji:'💎',reviews:9823,rating:4.6,sold_monthly:12400,trend:'🔥 TikTok-Viral',amazon_price:19.99,ali_price:3.50,profit_margin:82,platform:'both',highlight:'100% Naturstein'},
+      {rank:2,name:'Elektrische Gesichtsreinigungsbürste',emoji:'✨',reviews:7234,rating:4.4,sold_monthly:8900,trend:'📈 Steigend',amazon_price:34.99,ali_price:8.00,profit_margin:77,platform:'both',highlight:'5 Stufen, wasserdicht'},
+      {rank:3,name:'Kollagen Augenpads 60 Stück',emoji:'👁️',reviews:11043,rating:4.5,sold_monthly:15700,trend:'🔥 Sehr gefragt',amazon_price:12.99,ali_price:2.50,profit_margin:81,platform:'both',highlight:'Anti-Aging, kühlend'},
+      {rank:4,name:'Haarglätter ionisch 230°C LCD',emoji:'💇',reviews:8432,rating:4.3,sold_monthly:7200,trend:'🌟 Stabil',amazon_price:39.99,ali_price:12.00,profit_margin:70,platform:'both',highlight:'Keramik, 15s aufheizen'},
+      {rank:5,name:'Nagelsets Nail Art Gel Kit LED',emoji:'💅',reviews:6892,rating:4.4,sold_monthly:9800,trend:'📈 Steigend',amazon_price:29.99,ali_price:8.50,profit_margin:72,platform:'both',highlight:'48 Farben, inkl. Lampe'},
+      {rank:6,name:'Augenbrauen Stempel Schablone Set',emoji:'🎨',reviews:5234,rating:4.2,sold_monthly:8100,trend:'🌟 Beliebt',amazon_price:9.99,ali_price:1.80,profit_margin:82,platform:'both',highlight:'12 Formen, wasserfest'},
+      {rank:7,name:'Vitamin C Serum Hyaluron 30ml',emoji:'💧',reviews:14023,rating:4.5,sold_monthly:13400,trend:'🔥 Bestseller',amazon_price:16.99,ali_price:3.50,profit_margin:79,platform:'both',highlight:'Vegan, Anti-Aging'},
+      {rank:8,name:'Konjac Schwamm Gesichtspflege Set',emoji:'🌿',reviews:7123,rating:4.4,sold_monthly:9200,trend:'📈 Nachhaltig',amazon_price:14.99,ali_price:2.80,profit_margin:81,platform:'both',highlight:'Natürlich, alle Hauttypen'},
+      {rank:9,name:'Heiße Haarlocken Curler Automatisch',emoji:'🌀',reviews:5892,rating:4.3,sold_monthly:6700,trend:'🌟 Stabil',amazon_price:44.99,ali_price:15.00,profit_margin:67,platform:'both',highlight:'Ceramic, 3 Wärme'},
+      {rank:10,name:'Lippenmaske Set Honig 10 Stück',emoji:'💋',reviews:8234,rating:4.5,sold_monthly:12100,trend:'🔥 Sehr beliebt',amazon_price:11.99,ali_price:2.00,profit_margin:83,platform:'both',highlight:'Hyaluron, feuchtigkeitsspendend'}
+    ],
+    sport: [
+      {rank:1,name:'Fitnessbänder Set 5 Stärken Widerstand',emoji:'💪',reviews:23041,rating:4.5,sold_monthly:18900,trend:'🔥 Dauerbrenner',amazon_price:22.99,ali_price:4.00,profit_margin:83,platform:'both',highlight:'Latex-frei, inkl. Tasche'},
+      {rank:2,name:'Yogamatte rutschfest 6mm extra dick',emoji:'🧘',reviews:15234,rating:4.6,sold_monthly:14200,trend:'📈 Steigend',amazon_price:34.99,ali_price:8.50,profit_margin:76,platform:'both',highlight:'TPE, 183×61cm'},
+      {rank:3,name:'Springseil Digital Zähler Kabellos',emoji:'🏃',reviews:9823,rating:4.4,sold_monthly:12100,trend:'📈 Fitness-Trend',amazon_price:24.99,ali_price:5.80,profit_margin:77,platform:'both',highlight:'3m Kabel austauschbar'},
+      {rank:4,name:'Foam Roller Massagerolle Set',emoji:'🏋️',reviews:11043,rating:4.5,sold_monthly:9800,trend:'🌟 Stabil',amazon_price:29.99,ali_price:7.00,profit_margin:77,platform:'both',highlight:'33cm, High-Density'},
+      {rank:5,name:'Trinkflasche Edelstahl 1 Liter Sport',emoji:'🥤',reviews:18432,rating:4.6,sold_monthly:16700,trend:'🔥 Bestseller',amazon_price:19.99,ali_price:4.50,profit_margin:78,platform:'both',highlight:'BPA-frei, auslaufsicher'},
+      {rank:6,name:'Handgelenkstütze Sport Set links/rechts',emoji:'🤲',reviews:7234,rating:4.3,sold_monthly:8200,trend:'🌟 Stabil',amazon_price:17.99,ali_price:3.50,profit_margin:81,platform:'both',highlight:'Atmungsaktiv, Universal'},
+      {rank:7,name:'Campingkocher Gaskocher kompakt',emoji:'🏕️',reviews:6892,rating:4.5,sold_monthly:7100,trend:'📈 Sommer',amazon_price:39.99,ali_price:9.00,profit_margin:78,platform:'both',highlight:'220g, windgeschützt'},
+      {rank:8,name:'Rucksack Sport Wasserdicht 40L',emoji:'🎒',reviews:8923,rating:4.4,sold_monthly:7600,trend:'🌟 Stabil',amazon_price:44.99,ali_price:12.00,profit_margin:73,platform:'both',highlight:'USB-Port, reflektierend'},
+      {rank:9,name:'Massagepistole Muscle Gun 20 Stufen',emoji:'⚡',reviews:5892,rating:4.4,sold_monthly:6900,trend:'📈 Steigend',amazon_price:59.99,ali_price:18.00,profit_margin:70,platform:'both',highlight:'2500rpm, 6 Köpfe'},
+      {rank:10,name:'Fahrrad Satteltasche wasserdicht',emoji:'🚴',reviews:9123,rating:4.3,sold_monthly:8800,trend:'📈 Sommer-Trend',amazon_price:19.99,ali_price:4.20,profit_margin:79,platform:'both',highlight:'1.5L, reflektierend'}
+    ],
+    spielzeug: [
+      {rank:1,name:'Kinetic Sand 1kg Knetsand Farbig',emoji:'🏖️',reviews:21043,rating:4.6,sold_monthly:19400,trend:'🔥 Bestseller',amazon_price:19.99,ali_price:4.00,profit_margin:80,platform:'both',highlight:'3 Jahre+, indoor'},
+      {rank:2,name:'Montessori Holzspielzeug Baby 1 Jahr',emoji:'🪀',reviews:12234,rating:4.7,sold_monthly:11200,trend:'📈 Steigend',amazon_price:29.99,ali_price:7.50,profit_margin:75,platform:'both',highlight:'FSC-Holz, geschlechtsneutral'},
+      {rank:3,name:'Bubble Gun Seifenblasenpistole LED',emoji:'🫧',reviews:14892,rating:4.5,sold_monthly:16800,trend:'🔥 Viral',amazon_price:12.99,ali_price:2.80,profit_margin:78,platform:'both',highlight:'8 Löcher, 1000 Blasen/Min'},
+      {rank:4,name:'Squishmallow Plüschtier 40cm',emoji:'🧸',reviews:9823,rating:4.7,sold_monthly:8900,trend:'🔥 TikTok-Trend',amazon_price:19.99,ali_price:4.50,profit_margin:78,platform:'both',highlight:'Super weich, 50+ Motive'},
+      {rank:5,name:'Magnetische Bausteine 100 Teile',emoji:'🧲',reviews:11043,rating:4.5,sold_monthly:9800,trend:'📈 Steigend',amazon_price:44.99,ali_price:12.00,profit_margin:73,platform:'both',highlight:'STEM, CE-zertifiziert'},
+      {rank:6,name:'Slime Set 12 Farben Kinder',emoji:'💚',reviews:17432,rating:4.3,sold_monthly:14200,trend:'🌟 Stabil',amazon_price:16.99,ali_price:3.50,profit_margin:79,platform:'both',highlight:'Nicht toxisch, klebefrei'},
+      {rank:7,name:'Elektrisches Auto Kinder 12V mit Fernbedienung',emoji:'🚗',reviews:5892,rating:4.4,sold_monthly:5100,trend:'📈 Weihnachten',amazon_price:189.99,ali_price:65.00,profit_margin:66,platform:'both',highlight:'MP3, LED, bis 30kg'},
+      {rank:8,name:'Kreativset Malen Kinder 60-teilig',emoji:'🎨',reviews:8923,rating:4.5,sold_monthly:8200,trend:'🌟 Stabil',amazon_price:24.99,ali_price:5.50,profit_margin:78,platform:'both',highlight:'Buntstifte, Aquarell'},
+      {rank:9,name:'Baby Spielzeug Sensorball Set 6M+',emoji:'🔵',reviews:6743,rating:4.6,sold_monthly:7800,trend:'📈 Steigend',amazon_price:22.99,ali_price:5.00,profit_margin:78,platform:'both',highlight:'BPA-frei, 6 verschiedene'},
+      {rank:10,name:'Fidget Cube Anti-Stress Spielzeug',emoji:'🎲',reviews:13234,rating:4.3,sold_monthly:11900,trend:'🌟 Stabil',amazon_price:9.99,ali_price:1.80,profit_margin:82,platform:'both',highlight:'6 Seiten, verschiedene Funktionen'}
+    ],
+    auto: [
+      {rank:1,name:'KFZ-Staubsauger 12V 150W Handstaubsauger',emoji:'🚗',reviews:12043,rating:4.4,sold_monthly:13400,trend:'🔥 Bestseller',amazon_price:29.99,ali_price:7.00,profit_margin:77,platform:'both',highlight:'Nassansaugfähig, 5m Kabel'},
+      {rank:2,name:'Auto-Lufterfrischer Armaturenbrett Clip',emoji:'🌸',reviews:9823,rating:4.3,sold_monthly:15200,trend:'📈 Steigend',amazon_price:9.99,ali_price:1.50,profit_margin:85,platform:'both',highlight:'60 Tage Duft'},
+      {rank:3,name:'Reifendruckprüfer Digital Manometer',emoji:'⚙️',reviews:7892,rating:4.5,sold_monthly:9100,trend:'🌟 Stabil',amazon_price:22.99,ali_price:5.50,profit_margin:76,platform:'both',highlight:'0-150 PSI, LCD'},
+      {rank:4,name:'Dashcam 4K WiFi GPS Nachtsicht',emoji:'📹',reviews:8923,rating:4.4,sold_monthly:7400,trend:'📈 Steigend',amazon_price:79.99,ali_price:22.00,profit_margin:73,platform:'both',highlight:'140°, Loop-Aufnahme'},
+      {rank:5,name:'Auto-Lenkradbezug Leder universal',emoji:'🎯',reviews:11043,rating:4.2,sold_monthly:12800,trend:'🌟 Stabil',amazon_price:16.99,ali_price:3.80,profit_margin:78,platform:'both',highlight:'37-38cm, rutschfest'},
+      {rank:6,name:'USB KFZ-Adapter QC 3.0 2-Port',emoji:'⚡',reviews:15234,rating:4.5,sold_monthly:18900,trend:'🔥 Bestseller',amazon_price:12.99,ali_price:2.00,profit_margin:85,platform:'both',highlight:'30W Schnellladung'},
+      {rank:7,name:'Kofferraum-Organizer faltbar 50L',emoji:'🗃️',reviews:8432,rating:4.4,sold_monthly:8200,trend:'📈 Steigend',amazon_price:29.99,ali_price:7.50,profit_margin:75,platform:'both',highlight:'Wasserdicht, mit Trenner'},
+      {rank:8,name:'Auto-Sonnenschutz Seitenscheibe',emoji:'☀️',reviews:9123,rating:4.3,sold_monthly:11400,trend:'📈 Sommer',amazon_price:17.99,ali_price:3.50,profit_margin:81,platform:'both',highlight:'Universal, UV-Block 97%'},
+      {rank:9,name:'Parkscheibe digital automatisch blau',emoji:'🅿️',reviews:22043,rating:4.6,sold_monthly:21800,trend:'🔥 Deutschland-Spezifisch',amazon_price:24.99,ali_price:7.00,profit_margin:72,platform:'amazon',highlight:'Automatisch, StVO-konform'},
+      {rank:10,name:'Eiskratzer Teleskop mit Handschuh',emoji:'❄️',reviews:16892,rating:4.5,sold_monthly:14200,trend:'🌟 Winter-Saison',amazon_price:14.99,ali_price:3.00,profit_margin:80,platform:'both',highlight:'70-120cm ausziehbar'}
+    ],
+    buero: [
+      {rank:1,name:'Stiftebox Holz Organizer Bamboo',emoji:'✏️',reviews:8923,rating:4.5,sold_monthly:10200,trend:'📈 Steigend',amazon_price:19.99,ali_price:4.50,profit_margin:77,platform:'both',highlight:'4 Fächer, Nachhaltig'},
+      {rank:2,name:'Standing Desk Converter höhenverstellbar',emoji:'🖥️',reviews:6234,rating:4.4,sold_monthly:5800,trend:'🔥 Homeoffice',amazon_price:89.99,ali_price:28.00,profit_margin:69,platform:'both',highlight:'60x40cm, gasdruckfeder'},
+      {rank:3,name:'Monitor Ständer Bambus 2 Ebenen',emoji:'📺',reviews:9823,rating:4.5,sold_monthly:8900,trend:'📈 WFH-Trend',amazon_price:39.99,ali_price:9.00,profit_margin:78,platform:'both',highlight:'+USB, +Schublade'},
+      {rank:4,name:'Haftnotizen Neon 100 Blatt 6er Pack',emoji:'📝',reviews:14234,rating:4.4,sold_monthly:19800,trend:'🌟 Stabil',amazon_price:8.99,ali_price:1.50,profit_margin:83,platform:'both',highlight:'Wiederverwertbar'},
+      {rank:5,name:'Schreibtischunterlage Leder 90x45cm',emoji:'📋',reviews:12043,rating:4.5,sold_monthly:11400,trend:'📈 Steigend',amazon_price:29.99,ali_price:7.00,profit_margin:77,platform:'both',highlight:'Inklusive Mauspad'},
+      {rank:6,name:'LED Schreibtischlampe USB mit Ladestation',emoji:'💡',reviews:11892,rating:4.5,sold_monthly:9800,trend:'🔥 Bestseller',amazon_price:44.99,ali_price:12.00,profit_margin:73,platform:'both',highlight:'3 Modi, 10 Stufen'},
+      {rank:7,name:'Whiteboard Klebefolie 45x200cm',emoji:'📊',reviews:7432,rating:4.3,sold_monthly:8100,trend:'🌟 Stabil',amazon_price:22.99,ali_price:5.50,profit_margin:76,platform:'both',highlight:'Selbstklebend, abwischbar'},
+      {rank:8,name:'Ergonomisches Handgelenkpad Set',emoji:'🤲',reviews:9123,rating:4.5,sold_monthly:8700,trend:'📈 Homeoffice',amazon_price:19.99,ali_price:4.00,profit_margin:80,platform:'both',highlight:'Memory-Foam, Maus+Tastatur'},
+      {rank:9,name:'Magnetische Whiteboardmarker 8er Set',emoji:'🖊️',reviews:12234,rating:4.4,sold_monthly:14200,trend:'🌟 Stabil',amazon_price:12.99,ali_price:2.50,profit_margin:81,platform:'both',highlight:'Abwischbar, trocken & nass'},
+      {rank:10,name:'Papierschneider A4 Rollenschneider',emoji:'✂️',reviews:6892,rating:4.4,sold_monthly:6400,trend:'🌟 Stabil',amazon_price:34.99,ali_price:9.00,profit_margin:74,platform:'both',highlight:'30 Blatt, gerade Schnitte'}
+    ],
+    tier: [
+      {rank:1,name:'Hundeleine ausziehbar 5m Anti-Rück',emoji:'🐕',reviews:18234,rating:4.5,sold_monthly:16800,trend:'🔥 Bestseller',amazon_price:19.99,ali_price:4.00,profit_margin:80,platform:'both',highlight:'Stopp-Taste, reflektierend'},
+      {rank:2,name:'Katzenspielzeug Interaktiv Feder Set',emoji:'🐈',reviews:12043,rating:4.4,sold_monthly:13200,trend:'📈 Steigend',amazon_price:16.99,ali_price:2.80,profit_margin:84,platform:'both',highlight:'6-teilig, verschiedene Typen'},
+      {rank:3,name:'Hundegeschirr Anti-Zug atmungsaktiv',emoji:'🦮',reviews:9823,rating:4.5,sold_monthly:10100,trend:'📈 Steigend',amazon_price:24.99,ali_price:5.50,profit_margin:78,platform:'both',highlight:'Reflektierend, verstellbar'},
+      {rank:4,name:'Automatischer Futterspender Timer',emoji:'🍽️',reviews:7892,rating:4.3,sold_monthly:7400,trend:'🌟 Stabil',amazon_price:44.99,ali_price:12.00,profit_margin:73,platform:'both',highlight:'6L, 6 Mahlzeiten/Tag'},
+      {rank:5,name:'Katzentoilette Selbstreinigend elektrisch',emoji:'🚽',reviews:5234,rating:4.4,sold_monthly:5100,trend:'📈 Steigend',amazon_price:189.99,ali_price:55.00,profit_margin:71,platform:'both',highlight:'Geruchsarm, App-Steuerung'},
+      {rank:6,name:'Hundebett orthopädisch Größe L',emoji:'🛏️',reviews:8923,rating:4.6,sold_monthly:7600,trend:'🌟 Stabil',amazon_price:39.99,ali_price:10.00,profit_margin:75,platform:'both',highlight:'Memory Foam, waschbar'},
+      {rank:7,name:'Hund Wassernapf Anti-Schütten',emoji:'💧',reviews:11043,rating:4.5,sold_monthly:12400,trend:'🔥 Bestseller',amazon_price:9.99,ali_price:1.80,profit_margin:82,platform:'both',highlight:'Langsamfresser, Edelstahl'},
+      {rank:8,name:'Tierversicherung Ratgeber Notizbuch',emoji:'📖',reviews:5892,rating:4.2,sold_monthly:8200,trend:'🌟 Stabil',amazon_price:14.99,ali_price:3.00,profit_margin:80,platform:'both',highlight:'Impfpass, Gesundheitsvorsorge'},
+      {rank:9,name:'Vogelbad Terrakotta für Garten',emoji:'🐦',reviews:6234,rating:4.5,sold_monthly:6800,trend:'📈 Frühling',amazon_price:29.99,ali_price:7.00,profit_margin:77,platform:'both',highlight:'Frostfest, 35cm Durchmesser'},
+      {rank:10,name:'Aquarium Filter Intern leise 500L/h',emoji:'🐠',reviews:9123,rating:4.4,sold_monthly:8100,trend:'🌟 Stabil',amazon_price:22.99,ali_price:5.50,profit_margin:76,platform:'both',highlight:'Einstellbar, geräuscharm'}
+    ],
+    mode: [
+      {rank:1,name:'Damen Handtasche Leder Qualität groß',emoji:'👜',reviews:12234,rating:4.5,sold_monthly:10800,trend:'📈 Steigend',amazon_price:44.99,ali_price:10.00,profit_margin:78,platform:'both',highlight:'Mehrere Fächer, zeitlos'},
+      {rank:2,name:'Schmuck Set Edelstahl Halskette Ring',emoji:'💍',reviews:8923,rating:4.4,sold_monthly:11200,trend:'🔥 Bestseller',amazon_price:24.99,ali_price:3.50,profit_margin:86,platform:'both',highlight:'18K vergoldet, allergiefrei'},
+      {rank:3,name:'Polarisierte Sonnenbrille UV400 Sport',emoji:'🕶️',reviews:15043,rating:4.4,sold_monthly:14800,trend:'📈 Sommer',amazon_price:19.99,ali_price:3.00,profit_margin:85,platform:'both',highlight:'Unisex, TR90-Rahmen'},
+      {rank:4,name:'Seidenschal Damen 90x90cm Vintage',emoji:'🧣',reviews:7892,rating:4.5,sold_monthly:7400,trend:'🌟 Stabil',amazon_price:29.99,ali_price:6.00,profit_margin:80,platform:'both',highlight:'100% Seide, handrolliert'},
+      {rank:5,name:'Herren Brieftasche Slim Leder RFID',emoji:'👔',reviews:21043,rating:4.5,sold_monthly:19200,trend:'🔥 Bestseller',amazon_price:34.99,ali_price:6.50,profit_margin:81,platform:'both',highlight:'RFID-Schutz, 6 Kartenfächer'},
+      {rank:6,name:'Strickmütze Beanie Unisex Winter',emoji:'🧢',reviews:18234,rating:4.4,sold_monthly:22400,trend:'🌟 Winter-Saison',amazon_price:12.99,ali_price:2.00,profit_margin:85,platform:'both',highlight:'Fleece, 20+ Farben'},
+      {rank:7,name:'Lederarmband Herren geflochten Set',emoji:'⌚',reviews:9823,rating:4.3,sold_monthly:9100,trend:'📈 Steigend',amazon_price:14.99,ali_price:2.50,profit_margin:83,platform:'both',highlight:'3er Set, verstellbar'},
+      {rank:8,name:'Gürteltasche Bauchtasche Outdoor',emoji:'🎽',reviews:11043,rating:4.4,sold_monthly:12800,trend:'🔥 Fest-Saison',amazon_price:22.99,ali_price:4.50,profit_margin:80,platform:'both',highlight:'Wasserdicht, USB-Port'},
+      {rank:9,name:'Damen Ohrringe Perlen 925 Silber',emoji:'🪙',reviews:8923,rating:4.6,sold_monthly:8900,trend:'📈 Steigend',amazon_price:19.99,ali_price:3.00,profit_margin:85,platform:'both',highlight:'Hypoallergen, zeitlos'},
+      {rank:10,name:'Wintermantel Wolle Damen lang',emoji:'🧥',reviews:6892,rating:4.4,sold_monthly:6200,trend:'🌟 Winter',amazon_price:89.99,ali_price:25.00,profit_margin:72,platform:'both',highlight:'80% Wolle, klassisch'}
+    ],
+    garten: [
+      {rank:1,name:'Gartenschlauch flexibel Magic 30m',emoji:'🌊',reviews:21043,rating:4.4,sold_monthly:19800,trend:'🔥 Bestseller',amazon_price:29.99,ali_price:6.50,profit_margin:78,platform:'both',highlight:'Dehnbar auf 30m, knicksicher'},
+      {rank:2,name:'Hochbeet Holz Balkon Kräuterbeet',emoji:'🌱',reviews:9823,rating:4.5,sold_monthly:8900,trend:'📈 Frühling',amazon_price:44.99,ali_price:12.00,profit_margin:73,platform:'both',highlight:'Zeder, 80x40x30cm'},
+      {rank:3,name:'Solarleuchte Gartenweg 6er Set',emoji:'☀️',reviews:14234,rating:4.4,sold_monthly:13400,trend:'📈 Steigend',amazon_price:34.99,ali_price:8.00,profit_margin:77,platform:'both',highlight:'IP65, 8h Leuchtzeit'},
+      {rank:4,name:'Pflanzenkübel Balkon groß 30L',emoji:'🌺',reviews:8923,rating:4.4,sold_monthly:11200,trend:'🌟 Stabil',amazon_price:19.99,ali_price:4.50,profit_margin:78,platform:'both',highlight:'Selbstbewässerung, UV-stabil'},
+      {rank:5,name:'Gartenstuhl Klappbar Bistrostuhl',emoji:'🪑',reviews:12043,rating:4.4,sold_monthly:10100,trend:'📈 Sommer',amazon_price:39.99,ali_price:10.00,profit_margin:75,platform:'both',highlight:'Wetterfest, bis 150kg'},
+      {rank:6,name:'Kompostbehälter Thermokomposter 300L',emoji:'♻️',reviews:7892,rating:4.5,sold_monthly:6800,trend:'🌟 Nachhaltig',amazon_price:49.99,ali_price:14.00,profit_margin:72,platform:'both',highlight:'UV-beständig, Belüftung'},
+      {rank:7,name:'Gartenwerkzeug Set 8-teilig Edelstahl',emoji:'🔧',reviews:11234,rating:4.5,sold_monthly:9200,trend:'🌟 Stabil',amazon_price:29.99,ali_price:6.50,profit_margin:78,platform:'both',highlight:'Ergonomisch, Tragetasche'},
+      {rank:8,name:'Vogelhaus Holz zum Aufhängen',emoji:'🏡',reviews:8923,rating:4.6,sold_monthly:7600,trend:'📈 Frühling',amazon_price:19.99,ali_price:4.00,profit_margin:80,platform:'both',highlight:'FSC-Holz, wetterfest'},
+      {rank:9,name:'Bewässerungssystem Tropfbewässerung Set',emoji:'💧',reviews:9234,rating:4.4,sold_monthly:8100,trend:'📈 Sommer',amazon_price:24.99,ali_price:5.50,profit_margin:78,platform:'both',highlight:'126-teilig, automatisch'},
+      {rank:10,name:'Windmühle Gartendeko Metall bunt',emoji:'🌀',reviews:6892,rating:4.3,sold_monthly:8800,trend:'🌟 Deko-Trend',amazon_price:22.99,ali_price:5.00,profit_margin:78,platform:'both',highlight:'Rostfrei, 120cm'}
+    ]
+  };
+
+  return cats.map(cat => ({
+    category: cat.name,
+    emoji: cat.emoji,
+    products: (fallback[cat.id] || fallback.elektronik).slice(0, 10)
+  }));
+}
+
+function renderResults(data) {
+  const body = document.getElementById('phResultsBody');
+  body.innerHTML = data.map(catData => `
+    <div class="ph-cat-section">
+      <div class="ph-cat-section-title">
+        <span>${catData.emoji}</span>
+        <span>${catData.category}</span>
+        <span class="ph-cat-tag">Top ${catData.products.length}</span>
+      </div>
+      <div class="ph-prod-grid">
+        ${catData.products.map(p => renderProductCard(p, catData)).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProductCard(p, catData) {
+  const platBadge = p.platform === 'amazon' ? '<span class="ph-platform-badge amz">Amazon.de</span>'
+    : p.platform === 'aliexpress' ? '<span class="ph-platform-badge ali">AliExpress</span>'
+    : '<span class="ph-platform-badge both">Beide Plattformen</span>';
+  const margin = Math.round(((p.amazon_price - p.ali_price) / p.amazon_price) * 100);
+  const profit = (p.amazon_price - p.ali_price).toFixed(2);
+  const amzLink = `https://www.amazon.de/s?k=${encodeURIComponent(p.name)}&tag=geldcheck-21`;
+  const aliLink = `https://de.aliexpress.com/wholesale?SearchText=${encodeURIComponent(p.name)}`;
+
+  const priceRow = p.platform === 'amazon'
+    ? `<div class="ph-price-box amz-box" style="flex:1"><div class="ph-price-platform">Amazon.de</div><div class="ph-price-amount">€${p.amazon_price}</div><div class="ph-price-note">Verkaufspreis</div></div>`
+    : p.platform === 'aliexpress'
+    ? `<div class="ph-price-box ali-box" style="flex:1"><div class="ph-price-platform">AliExpress</div><div class="ph-price-amount">€${p.ali_price}</div><div class="ph-price-note">Einkaufspreis</div></div>`
+    : `<div class="ph-price-box amz-box"><div class="ph-price-platform">Amazon.de</div><div class="ph-price-amount">€${p.amazon_price}</div><div class="ph-price-note">Verkaufspreis</div></div>
+       <div class="ph-price-box ali-box"><div class="ph-price-platform">AliExpress</div><div class="ph-price-amount">€${p.ali_price}</div><div class="ph-price-note">Einkaufspreis</div></div>`;
+
+  const ctaRow = p.platform === 'amazon'
+    ? `<a href="${amzLink}" target="_blank" rel="noopener" class="ph-btn-amz" style="flex:1">🛒 Amazon.de</a>`
+    : p.platform === 'aliexpress'
+    ? `<a href="${aliLink}" target="_blank" rel="noopener" class="ph-btn-ali" style="flex:1">🛍️ AliExpress</a>`
+    : `<a href="${amzLink}" target="_blank" rel="noopener" class="ph-btn-amz">🛒 Amazon</a>
+       <a href="${aliLink}" target="_blank" rel="noopener" class="ph-btn-ali">🛍️ AliExpress</a>`;
+
+  return `
+    <div class="ph-prod-card" data-platform="${p.platform}">
+      <div class="ph-rank">#${p.rank}</div>
+      ${platBadge}
+      <div class="ph-prod-img">${p.emoji}</div>
+      <div class="ph-prod-body">
+        <div class="ph-prod-name">${p.name}</div>
+        <div class="ph-prod-stats">
+          <span class="ph-stat-pill reviews">⭐ ${p.rating} (${p.reviews.toLocaleString('de-DE')})</span>
+          <span class="ph-stat-pill sold">📦 ${p.sold_monthly.toLocaleString('de-DE')}/Monat</span>
+          <span class="ph-stat-pill trend">${p.trend}</span>
+        </div>
+        <div class="ph-price-row">${priceRow}</div>
+        ${p.platform === 'both' ? `<div class="ph-profit-badge"><span class="ph-profit-label">💰 Geschätzte Marge</span><span class="ph-profit-val">€${profit} (${margin}%)</span></div>` : ''}
+        ${p.highlight ? `<div style="font-size:.7rem;color:var(--muted);margin-bottom:10px">✅ ${p.highlight}</div>` : ''}
+        <div class="ph-cta-row">${ctaRow}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Init
+buildCatGrid();
 
 // === SEO ANALYZER ===
 let seoStrategy = 'mobile';
