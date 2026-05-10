@@ -1041,6 +1041,296 @@
     .polaroid-img { height: 160px; }
     .music-toggle { top: 1rem; right: 1rem; width: 42px; height: 42px; }
   }
+
+  /* ============================================================
+     BOARDING PASS — Journey
+     ============================================================ */
+  .journey-section { padding: 5rem 1.5rem; min-height: auto; }
+
+  .boarding-pass {
+    max-width: 580px;
+    margin: 2.5rem auto 0;
+    background: linear-gradient(135deg, rgba(20,16,31,0.65), rgba(31,20,48,0.55));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212,168,87,0.3);
+    border-radius: 6px;
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    box-shadow: var(--shadow-deep);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.4s ease;
+  }
+
+  section.visible .boarding-pass {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+  }
+
+  .bp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed rgba(212,168,87,0.3);
+    padding-bottom: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .bp-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .bp-class {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--rose-soft);
+    text-transform: uppercase;
+  }
+
+  .bp-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .bp-city { flex: 1; text-align: center; }
+
+  .bp-city-name {
+    font-family: 'Italiana', serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    color: var(--cream);
+  }
+
+  .bp-city-code {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-top: 0.3rem;
+  }
+
+  .bp-city-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-top: 0.3rem;
+    letter-spacing: 0.08em;
+  }
+
+  .bp-flight-line {
+    flex: 1.3;
+    position: relative;
+    height: 36px;
+  }
+
+  .bp-flight-line svg { width: 100%; height: 100%; overflow: visible; }
+  .bp-line { stroke: var(--gold); stroke-width: 1; stroke-dasharray: 4 3; fill: none; opacity: 0.5; }
+
+  .bp-plane-bp {
+    fill: var(--gold-bright);
+    filter: drop-shadow(0 0 6px var(--gold-bright));
+    transform-origin: center;
+  }
+
+  section.visible .bp-plane-bp {
+    animation: bpFly 4s 0.6s ease forwards;
+  }
+
+  @keyframes bpFly {
+    0% { transform: translateX(-90px); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateX(90px); opacity: 1; }
+  }
+
+  .bp-meta {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px dashed rgba(212,168,87,0.3);
+    padding-top: 0.9rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .bp-meta-item {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .bp-meta-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--cream);
+    margin-top: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .bp-stamp {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    border: 2px solid rgba(201,123,138,0.55);
+    color: var(--rose);
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    padding: 0.25rem 0.5rem;
+    transform: rotate(-12deg);
+    text-transform: uppercase;
+    border-radius: 3px;
+    opacity: 0.9;
+  }
+
+  /* ============================================================
+     COUPLE & FAMILY ILLUSTRATIONS
+     ============================================================ */
+  .couple-svg, .family-svg {
+    display: block;
+    margin: 1.8rem auto 0.5rem;
+    width: 200px;
+    height: auto;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 1.4s ease;
+  }
+
+  .family-svg { width: 240px; }
+
+  section.visible .couple-svg,
+  section.visible .family-svg {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.5s;
+  }
+
+  .family-card {
+    background: linear-gradient(135deg, rgba(31,20,48,0.55), rgba(20,16,31,0.45));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(244,210,122,0.25);
+    border-radius: 4px;
+    padding: 3rem 2rem;
+    max-width: 620px;
+    margin: 2rem auto 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(201,123,138,0.15);
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.6s ease;
+  }
+
+  section.visible .family-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+  }
+
+  .family-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(244,210,122,0.18);
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  /* ============================================================
+     LOVE STATS
+     ============================================================ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.2rem;
+    margin: 3rem auto 0;
+    max-width: 760px;
+  }
+
+  .stat-card {
+    background: rgba(20,16,31,0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212,168,87,0.22);
+    border-radius: 4px;
+    padding: 1.6rem 1rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+    position: relative;
+  }
+
+  section.visible .stat-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  section.visible .stat-card:nth-child(1) { transition-delay: 0.3s; }
+  section.visible .stat-card:nth-child(2) { transition-delay: 0.5s; }
+  section.visible .stat-card:nth-child(3) { transition-delay: 0.7s; }
+  section.visible .stat-card:nth-child(4) { transition-delay: 0.9s; }
+
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(212,168,87,0.1);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .stat-num {
+    font-family: 'Italiana', serif;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.4rem;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* Signature script */
+  .signature-script {
+    font-family: 'Cormorant Garamond', cursive;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--rose-soft);
+    margin-top: 1rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(201,123,138,0.3);
+  }
+
 </style>
 
 </head>
@@ -1090,6 +1380,59 @@
     <div class="scroll-cue">Scroll to begin</div>
   </section>
 
+  <!-- BOARDING PASS — JOURNEY 2019 → 2021 -->
+
+  <section class="journey-section">
+    <div class="container">
+      <div class="chapter-label">The Journey</div>
+      <h2 class="heading" style="font-size: clamp(1.6rem, 4vw, 2.4rem);">From the day we said yes,<br>to the day life pulled us apart.</h2>
+      <p class="quote">A ticket no one ever wants to print — but love still boarded the plane.</p>
+
+```
+  <div class="boarding-pass">
+    <div class="bp-stamp">Forever ✦</div>
+    <div class="bp-header">
+      <div class="bp-brand">Love · Airlines</div>
+      <div class="bp-class">First Class · Soulmates</div>
+    </div>
+    <div class="bp-route">
+      <div class="bp-city">
+        <div class="bp-city-name">Pakistan</div>
+        <div class="bp-city-code">LHE</div>
+        <div class="bp-city-date">11 · 07 · 2019</div>
+      </div>
+      <div class="bp-flight-line">
+        <svg viewBox="-100 0 200 36" preserveAspectRatio="xMidYMid meet">
+          <line x1="-90" y1="18" x2="90" y2="18" class="bp-line"/>
+          <text x="0" y="23" text-anchor="middle" class="bp-plane-bp" font-size="16">✈</text>
+        </svg>
+      </div>
+      <div class="bp-city">
+        <div class="bp-city-name">Germany</div>
+        <div class="bp-city-code">DUS</div>
+        <div class="bp-city-date">21 · 05 · 2021</div>
+      </div>
+    </div>
+    <div class="bp-meta">
+      <div>
+        <div class="bp-meta-item">Passenger</div>
+        <div class="bp-meta-value">Two souls, one heart</div>
+      </div>
+      <div>
+        <div class="bp-meta-item">Distance</div>
+        <div class="bp-meta-value">~5,800 km</div>
+      </div>
+      <div>
+        <div class="bp-meta-item">Return</div>
+        <div class="bp-meta-value">Always to you</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
   <!-- WEDDING -->
 
   <section id="wedding">
@@ -1099,17 +1442,46 @@
         <div class="wedding-rings">◯ ◯</div>
         <p class="date" style="opacity:1; transform:none;">11 · JULY · 2019 · PAKISTAN</p>
         <h2 class="heading heading-gold" style="opacity:1; transform:none;">The day two souls<br>became one.</h2>
-        <p class="quote" style="opacity:1; transform:none;">
-          Under a sky written by Allah, with rings of gold and hearts that already knew each other,
-          we said the words that turned a promise into forever.
-        </p>
-        <div class="ornament">
-          <span class="ornament-line"></span>
-          <span class="ornament-symbol">❦</span>
-          <span class="ornament-line"></span>
-        </div>
-      </div>
+
+```
+    <svg class="couple-svg" viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="coupleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f4d27a"/>
+          <stop offset="100%" stop-color="#c97b8a"/>
+        </linearGradient>
+      </defs>
+      <g stroke="url(#coupleGrad)" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Two intertwined wedding rings -->
+        <circle cx="95" cy="70" r="28"/>
+        <circle cx="145" cy="70" r="28"/>
+        <!-- Decorative arabesque flourishes -->
+        <path d="M 55 70 Q 30 55 38 32 Q 52 22 64 38"/>
+        <path d="M 55 70 Q 30 85 38 108 Q 52 118 64 102"/>
+        <path d="M 185 70 Q 210 55 202 32 Q 188 22 176 38"/>
+        <path d="M 185 70 Q 210 85 202 108 Q 188 118 176 102"/>
+        <!-- Tiny decorative dots -->
+        <circle cx="42" cy="70" r="1.5" fill="url(#coupleGrad)"/>
+        <circle cx="198" cy="70" r="1.5" fill="url(#coupleGrad)"/>
+      </g>
+      <!-- Heart in the intersection -->
+      <path d="M 120 62 Q 114 54 106 58 Q 100 68 120 82 Q 140 68 134 58 Q 126 54 120 62 Z" fill="#c97b8a" opacity="0.75"/>
+    </svg>
+
+    <p class="quote" style="opacity:1; transform:none;">
+      Under a sky written by Allah, with rings of gold and hearts that already knew each other,
+      we said the words that turned a promise into forever.
+    </p>
+    <p class="signature-script">two hearts · one path · one home</p>
+    <div class="ornament">
+      <span class="ornament-line"></span>
+      <span class="ornament-symbol">❦</span>
+      <span class="ornament-line"></span>
     </div>
+  </div>
+</div>
+```
+
   </section>
 
   <section class="pause">
@@ -1245,6 +1617,65 @@
     </div>
   </section>
 
+  <!-- FAMILY ILLUSTRATION -->
+
+  <section id="family">
+    <div class="container">
+      <div class="chapter-label">And then · we were three</div>
+      <div class="family-card">
+        <p class="quote" style="opacity:1; transform:none; font-size: clamp(1.1rem, 2.4vw, 1.5rem);">
+          Two hearts that became three.
+        </p>
+
+```
+    <svg class="family-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="famGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f4d27a"/>
+          <stop offset="50%" stop-color="#e0a4ad"/>
+          <stop offset="100%" stop-color="#c97b8a"/>
+        </linearGradient>
+      </defs>
+      <g stroke="url(#famGrad)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Mom (left) — softer silhouette with hair -->
+        <circle cx="80" cy="55" r="13"/>
+        <path d="M 67 50 Q 60 42 68 35 Q 80 30 92 38 Q 95 48 92 56"/>
+        <path d="M 70 68 Q 64 100 70 145 L 92 145 L 90 68"/>
+        <!-- Dad (right) — taller -->
+        <circle cx="200" cy="50" r="14"/>
+        <path d="M 188 64 Q 184 100 188 145 L 215 145 L 212 64"/>
+        <!-- Child (center, small, between them) -->
+        <circle cx="140" cy="92" r="9"/>
+        <path d="M 132 100 Q 128 122 132 145 L 148 145 L 148 100"/>
+        <!-- Connecting hands — parents holding child -->
+        <path d="M 92 118 Q 110 110 132 118"/>
+        <path d="M 148 118 Q 168 110 188 118"/>
+        <!-- Floating heart above family -->
+        <path d="M 140 22 Q 134 14 126 18 Q 120 28 140 42 Q 160 28 154 18 Q 146 14 140 22 Z" fill="#c97b8a" stroke="#c97b8a" opacity="0.85"/>
+        <!-- Sparkles around -->
+        <text x="40" y="40" font-size="10" fill="#f4d27a" stroke="none">✦</text>
+        <text x="240" y="35" font-size="10" fill="#f4d27a" stroke="none">✦</text>
+        <text x="50" y="120" font-size="8" fill="#f4d27a" stroke="none">✦</text>
+        <text x="235" y="125" font-size="8" fill="#f4d27a" stroke="none">✦</text>
+      </g>
+    </svg>
+
+    <p class="quote" style="opacity:1; transform:none; margin-top: 1.5rem;">
+      You. Me. And a little soul who carries both our smiles.<br>
+      This is the picture I prayed for, before I knew how to ask for it.
+    </p>
+    <p class="signature-script">our little family · alhamdulillah</p>
+    <div class="ornament">
+      <span class="ornament-line"></span>
+      <span class="ornament-symbol">❦</span>
+      <span class="ornament-line"></span>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
   <!-- GALLERY -->
 
   <section class="gallery-section">
@@ -1277,6 +1708,46 @@
 
   <section class="pause">
     <p class="pause-text">One day there will be no more distance.<br>Only us, only home.</p>
+  </section>
+
+  <!-- LOVE IN NUMBERS -->
+
+  <section id="stats">
+    <div class="container">
+      <div class="chapter-label">Our Love · In Numbers</div>
+      <h2 class="heading" style="font-size: clamp(1.8rem, 4.5vw, 2.6rem);">A life measured in moments.</h2>
+      <p class="quote">Some things you cannot count. Others, you count every single day.</p>
+
+```
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" data-target="2496">0</div>
+      <div class="stat-label">Days Married</div>
+      <div class="stat-sub">since 11 July 2019</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="1816">0</div>
+      <div class="stat-label">Days Across Borders</div>
+      <div class="stat-sub">since May 2021</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="670">0</div>
+      <div class="stat-label">Days a Mother</div>
+      <div class="stat-sub">since Hussain arrived</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Reasons I Love You</div>
+      <div class="stat-sub">and still counting</div>
+    </div>
+  </div>
+
+  <p class="quote" style="margin-top: 3rem;">
+    And if Allah grants us a thousand more days, I will count each one with your name.
+  </p>
+</div>
+```
+
   </section>
 
   <!-- FINALE -->
@@ -1414,6 +1885,32 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+/* STAT COUNTERS — animate from 0 to target when in view */
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const statObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 1800;
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.floor(target * eased);
+        el.textContent = value.toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toLocaleString();
+      }
+      requestAnimationFrame(tick);
+      statObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+statNums.forEach(s => statObs.observe(s));
 
 /* FINALE — DAWN */
 const finaleObserver = new IntersectionObserver((entries) => {
