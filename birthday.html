@@ -1056,7 +1056,11 @@
 </div>
 
 <button class="music-toggle" id="musicToggle" aria-label="Toggle music">♪</button>
+<audio id="bgMusic" loop preload="auto">
 
+  <source src="music.mp3" type="audio/mpeg">
+  <source src="music.m4a" type="audio/mp4">
+</audio>
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -1494,100 +1498,46 @@ window.addEventListener('scroll', () => {
   document.getElementById('scrollProgress').style.width = pct + '%';
 });
 
-/* AMBIENT MUSIC (Web Audio generative piano) */
+/* MUSIC TOGGLE — plays music.mp3 from the same folder */
 const musicBtn = document.getElementById('musicToggle');
-let audioCtx = null;
+const bgMusic = document.getElementById('bgMusic');
 let musicPlaying = false;
-let musicTimer = null;
-
-const melody = [
-  { note: 261.63, dur: 3 },  // C4
-  { note: 311.13, dur: 2 },  // D#4
-  { note: 392.00, dur: 3 },  // G4
-  { note: 466.16, dur: 2 },  // A#4
-  { note: 523.25, dur: 4 },  // C5
-  { note: 392.00, dur: 2 },  // G4
-  { note: 349.23, dur: 3 },  // F4
-  { note: 311.13, dur: 4 },  // D#4
-  { note: 261.63, dur: 5 },  // C4
-];
-
-function playNote(ctx, freq, duration, when) {
-  const osc = ctx.createOscillator();
-  osc.type = 'sine';
-  osc.frequency.value = freq;
-
-  const osc2 = ctx.createOscillator();
-  osc2.type = 'triangle';
-  osc2.frequency.value = freq * 2;
-
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0, when);
-  gain.gain.linearRampToValueAtTime(0.07, when + 0.05);
-  gain.gain.exponentialRampToValueAtTime(0.001, when + duration);
-
-  const gain2 = ctx.createGain();
-  gain2.gain.setValueAtTime(0, when);
-  gain2.gain.linearRampToValueAtTime(0.018, when + 0.05);
-  gain2.gain.exponentialRampToValueAtTime(0.001, when + duration * 0.8);
-
-  const delay = ctx.createDelay();
-  delay.delayTime.value = 0.4;
-  const fb = ctx.createGain();
-  fb.gain.value = 0.3;
-  const wet = ctx.createGain();
-  wet.gain.value = 0.35;
-
-  osc.connect(gain);
-  osc2.connect(gain2);
-  gain.connect(ctx.destination);
-  gain2.connect(ctx.destination);
-  gain.connect(delay);
-  delay.connect(fb);
-  fb.connect(delay);
-  delay.connect(wet);
-  wet.connect(ctx.destination);
-
-  osc.start(when);
-  osc2.start(when);
-  osc.stop(when + duration);
-  osc2.stop(when + duration);
-}
-
-function playMelodyLoop() {
-  if (!musicPlaying || !audioCtx) return;
-  let t = audioCtx.currentTime + 0.1;
-  melody.forEach(n => {
-    playNote(audioCtx, n.note, n.dur, t);
-    t += n.dur;
-  });
-  // Lower octave bass under melody
-  t = audioCtx.currentTime + 0.1;
-  melody.forEach(n => {
-    playNote(audioCtx, n.note / 2, n.dur, t);
-    t += n.dur;
-  });
-  const totalDur = melody.reduce((s, n) => s + n.dur, 0);
-  musicTimer = setTimeout(playMelodyLoop, totalDur * 1000);
-}
 
 musicBtn.addEventListener('click', () => {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
   if (musicPlaying) {
+    bgMusic.pause();
     musicPlaying = false;
-    if (musicTimer) clearTimeout(musicTimer);
     musicBtn.classList.remove('playing');
     musicBtn.textContent = '♪';
-    if (audioCtx.state === 'running') audioCtx.suspend();
   } else {
-    musicPlaying = true;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    musicBtn.classList.add('playing');
-    musicBtn.textContent = '♫';
-    playMelodyLoop();
+    const promise = bgMusic.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        musicPlaying = true;
+        musicBtn.classList.add('playing');
+        musicBtn.textContent = '♫';
+      }).catch(err => {
+        // Autoplay blocked or no file found
+        console.warn('Music could not play:', err);
+        alert('Add a "music.mp3" file in the same folder as index.html, then refresh.');
+      });
+    }
   }
+});
+
+/* Fade-in volume on first play */
+bgMusic.volume = 0;
+bgMusic.addEventListener('play', () => {
+  let v = 0;
+  const target = 0.4;
+  const fade = setInterval(() => {
+    v += 0.02;
+    if (v >= target) { v = target; clearInterval(fade); }
+    bgMusic.volume = v;
+  }, 80);
+});
+bgMusic.addEventListener('pause', () => {
+  bgMusic.volume = 0;
 });
 </script>
 
